@@ -10,6 +10,11 @@
 
 #include "Map.hpp"
 
+#define UP_ARROW 65
+#define DOWN_ARROW 66
+#define RIGHT_ARROW 67
+#define LEFT_ARROW 68
+
 class Entity {
     public:
 
@@ -19,11 +24,11 @@ class Entity {
         };
 
         enum Direction {
-            UP,
-            DOWN,
-            LEFT,
-            RIGHT,
-            NONE
+            NONE = 1,
+            UP = UP_ARROW,
+            DOWN = DOWN_ARROW,
+            RIGHT = RIGHT_ARROW,
+            LEFT = LEFT_ARROW
         };
 
         Entity(EntityType type, Map *map);
@@ -33,16 +38,18 @@ class Entity {
         void moveDown();
         void moveLeft();
         void moveRight();
+        void move();
+        void setDir(Direction dir);
     protected:
-    private:
-        void _getPos();
-
         Map *_map;
-        EntityType _type;
-        char _carac;
         int _x;
         int _y;
         Direction _dir;
+
+    private:
+        EntityType _type;
+        char _carac;
+        void _getPos();
 };
 
 #endif /* !ENTITY_HPP_ */
