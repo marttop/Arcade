@@ -9,6 +9,7 @@
 
 Map::Map()
 {
+    std::srand(std::time(0));
     _rowCount = 15;
     _colCount = 15;
     _isFruit = 0;

@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <poll.h>
 #include <fstream>
+#include <ctime>
 
 char getch(void);
 

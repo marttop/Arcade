@@ -10,7 +10,7 @@
 
 #include <vector>
 #include <utility>
-#include <time.h>
+#include <ctime>
 #include "Map.hpp"
 
 #define LEFT_ARROW 68

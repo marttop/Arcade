@@ -11,6 +11,7 @@
 #include <cstring>
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
 class Map {
     public:
