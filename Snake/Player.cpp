@@ -59,7 +59,7 @@ int Player::MoveSnake(char c)
         else if (_snake.begin()->first == RIGHT_ARROW && c == LEFT_ARROW) c = RIGHT_ARROW;
         _snake.begin()->first = c;
     }
-    currTime = clock();
+    currTime = std::clock();
     if (currTime - prevTime >= 100000) {
         _snakeEnd = _snake.back();
         std::pair<int, std::pair<int, int>> snakeHead = std::make_pair(_snake.begin()->first, std::make_pair(_snake.begin()->second.first, _snake.begin()->second.second));
