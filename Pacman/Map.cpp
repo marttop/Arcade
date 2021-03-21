@@ -29,7 +29,18 @@ void Map::Map::_readMap()
 
 void Map::Map::printMap() const
 {
+    std::cout << "\e[1;1H\e[2J";
     for (std::string s : this->map) {
         std::cout << s << std::endl;
     }
+}
+
+int Map::Map::getScore() const
+{
+    return (this->_score);
+}
+
+void Map::Map::setScore(int score)
+{
+    this->_score = score;
 }

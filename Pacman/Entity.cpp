@@ -19,6 +19,7 @@ Entity::Entity(EntityType type, Map *map)
     this->_getPos();
     std::cout << this->_map->map[this->_y][this->_x] << std::endl;
     this->_dir = NONE;
+    this->_on = ' ';
 }
 
 void Entity::Entity::_getPos()
@@ -69,25 +70,94 @@ void Entity::Entity::move()
                 break;
         }
         prevTime = currTime;
+        this->_map->printMap();
     }
 }
 
 void Entity::Entity::moveUp()
 {
-    std::cout << "up" << std::endl;
+    if (this->_y > 0) {
+        if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ') && this->_type == PLAYER) {
+            if (this->_map->map[_y - 1][_x] == '.')
+                this->_map->setScore(this->_map->getScore() + 1);
+            this->_map->map[_y - 1][_x] = this->_carac;
+            this->_map->map[_y][_x] = ' ';
+            this->_on = ' ';
+            this->_y -= 1;
+        }
+        else if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ') && this->_type == GHOST) {
+            this->_map->map[_y][_x] = this->_on;
+            this->_on = this->_map->map[_y - 1][_x];
+            this->_map->map[_y - 1][_x] = this->_carac;
+            this->_y -= 1;
+        }
+        else
+            this->_dir = NONE;
+    }
 }
 
 void Entity::Entity::moveDown()
 {
-    std::cout << "down" << std::endl;
+    if (this->_y < this->_map->map.size() - 1) {
+        if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ') && this->_type == PLAYER) {
+            if (this->_map->map[_y + 1][_x] == '.')
+                this->_map->setScore(this->_map->getScore() + 1);
+            this->_map->map[_y + 1][_x] = this->_carac;
+            this->_map->map[_y][_x] = ' ';
+            this->_on = ' ';
+            this->_y += 1;
+        }
+        else if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ') && this->_type == GHOST) {
+            this->_map->map[_y][_x] = this->_on;
+            this->_on = this->_map->map[_y + 1][_x];
+            this->_map->map[_y + 1][_x] = this->_carac;
+            this->_y += 1;
+        }
+        else
+            this->_dir = NONE;
+    }
 }
 
 void Entity::Entity::moveLeft()
 {
-    std::cout << "left" << std::endl;
+    if (this->_x > 0) {
+        if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ') && this->_type == PLAYER) {
+            if (this->_map->map[_y][_x - 1] == '.')
+                this->_map->setScore(this->_map->getScore() + 1);
+            this->_map->map[_y][_x - 1] = this->_carac;
+            this->_map->map[_y][_x] = ' ';
+            this->_on = ' ';
+            this->_x -= 1;
+        }
+        else if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ') && this->_type == GHOST) {
+            this->_map->map[_y][_x] = this->_on;
+            this->_on = this->_map->map[_y][_x - 1];
+            this->_map->map[_y][_x - 1] = this->_carac;
+            this->_x -= 1;
+        }
+        else
+            this->_dir = NONE;
+    }
 }
 
 void Entity::Entity::moveRight()
 {
-    std::cout << "right" << std::endl;
+    if (this->_x < this->_map->map[_y].size() - 1) {
+        if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ') && this->_type == PLAYER) {
+            if (this->_map->map[_y][_x + 1] == '.')
+                this->_map->setScore(this->_map->getScore() + 1);
+            this->_map->map[_y][_x + 1] = this->_carac;
+            this->_map->map[_y][_x] = ' ';
+            this->_on = ' ';
+            this->_x += 1;
+        }
+        else if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ') && this->_type == GHOST) {
+            this->_map->map[_y][_x] = this->_on;
+            this->_on = this->_map->map[_y][_x + 1];
+            this->_map->map[_y][_x + 1] = this->_carac;
+            this->_x += 1;
+        }
+        else
+            this->_dir = NONE;
+    }
 }

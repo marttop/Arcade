@@ -49,6 +49,7 @@ class Entity {
     private:
         EntityType _type;
         char _carac;
+        char _on;
         void _getPos();
 };
 

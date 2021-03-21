@@ -21,13 +21,15 @@ class Map {
         Map();
         ~Map();
         void printMap() const;
-
+        void setScore(int score);
+        int getScore() const;
 
         std::vector<std::string> map;
     protected:
     private:
         void _readMap();
         std::ifstream _file;
+        int _score;
 };
 
 #endif /* !MAP_HPP_ */
