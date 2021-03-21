@@ -47,30 +47,23 @@ void Entity::Entity::setDir(Direction dir)
 
 void Entity::Entity::move()
 {
-    static clock_t currTime = 0;
-    static clock_t prevTime = 0;
 
-    currTime = std::clock();
-    if (currTime - prevTime >= 100000) {
-        switch (this->_dir) {
-            case UP:
-                this->moveUp();
-                break;
-            case DOWN:
-                this->moveDown();
-                break;
-            case LEFT:
-                this->moveLeft();
-                break;
-            case RIGHT:
-                this->moveRight();
-                break;
-            default:
-                std::cout << "none" << std::endl;
-                break;
-        }
-        prevTime = currTime;
-        this->_map->printMap();
+
+    switch (this->_dir) {
+        case UP:
+            this->moveUp();
+            break;
+        case DOWN:
+            this->moveDown();
+            break;
+        case LEFT:
+            this->moveLeft();
+            break;
+        case RIGHT:
+            this->moveRight();
+            break;
+        default:
+            break;
     }
 }
 
@@ -138,6 +131,12 @@ void Entity::Entity::moveLeft()
         else
             this->_dir = NONE;
     }
+    else if (this->_x == 0 && this->_y == 11) {
+        this->_map->map[_y][this->_map->map[_y].size() - 1] = this->_carac;
+        this->_map->map[_y][_x] = ' ';
+        this->_on = ' ';
+        this->_x = this->_map->map[_y].size() - 1;
+    }
 }
 
 void Entity::Entity::moveRight()
@@ -159,5 +158,11 @@ void Entity::Entity::moveRight()
         }
         else
             this->_dir = NONE;
+    }
+    else if (this->_x == this->_map->map[_y].size() - 1 && this->_y == 11) {
+        this->_map->map[_y][0] = this->_carac;
+        this->_map->map[_y][_x] = ' ';
+        this->_on = ' ';
+        this->_x = 0;
     }
 }

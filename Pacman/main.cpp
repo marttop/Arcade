@@ -7,18 +7,32 @@
 
 #include "Entity.hpp"
 #include "Utils.hpp"
+#include "Player.hpp"
 
+void gameInterface(Map *m, Player *player, char c)
+{
+    static clock_t currTime = 0;
+    static clock_t prevTime = 0;
 
+    currTime = std::clock();
+	if (c != 0)
+		player->setDir((Entity::Direction)c);
+	if (currTime - prevTime >= 100000) {
+		std::cout << "\e[1;1H\e[2J";
+		player->move();
+		std::cout << "Score: " << m->getScore() << std::endl << std::endl;
+		m->printMap();
+		prevTime = currTime;
+	}
+}
 
 int main(void)
 {
 	try {
         Map m;
-		Entity *player = new Entity(Entity::PLAYER, &m);
+		Player *player = new Player(&m);
     	for (char c = 0; (c = getch()) != 'x';) {
-			if (c != 0)
-				player->setDir((Entity::Direction)c);
-			player->move();
+			gameInterface(&m, player, c);
     	}
 	}
 	catch (std::exception const &e) {

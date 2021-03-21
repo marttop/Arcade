@@ -13,6 +13,7 @@ Map::Map()
     if (!_file.is_open())
         throw std::invalid_argument("No 'map.txt' found");
     this->_readMap();
+    this->_score = 0;
 }
 
 Map::~Map()
@@ -29,7 +30,6 @@ void Map::Map::_readMap()
 
 void Map::Map::printMap() const
 {
-    std::cout << "\e[1;1H\e[2J";
     for (std::string s : this->map) {
         std::cout << s << std::endl;
     }

@@ -8,7 +8,8 @@
 SRC			= 	main.cpp \
 				Map.cpp \
 				Entity.cpp \
-				Utils.cpp
+				Utils.cpp \
+				Player.cpp
 
 CXXFLAGS 	=	-Wall -Wextra -g3 -O0
 NAME 		= 	Pacman
