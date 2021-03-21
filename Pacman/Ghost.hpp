@@ -17,6 +17,7 @@ class Ghost : public Entity {
         void moveGhost();
     protected:
     private:
+        int start;
 };
 
 #endif /* !GHOST_HPP_ */
