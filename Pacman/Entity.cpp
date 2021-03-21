@@ -13,11 +13,10 @@ Entity::Entity(EntityType type, Map *map)
     this->_map = map;
     if (this->_type == PLAYER) {
         this->_carac = '@';
+        this->_getPos();
     }
     else
         this->_carac = 'G';
-    this->_getPos();
-    std::cout << this->_map->map[this->_y][this->_x] << std::endl;
     this->_dir = NONE;
     this->_on = ' ';
 }
