@@ -12,21 +12,26 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "Player.hpp"
+#include "Score.hpp"
+
+class Player;
 
 class Map {
     public:
         Map();
         ~Map();
-        void PrintMap(void);
-        int GetRowCount(void);
-        int GetColCount(void);
-        int SetSnake(int x, int y);
+        void printMap(void);
+        int getRowCount(void);
+        int getColCount(void);
+        int setSnake(int x, int y);
+        int drawAsciiGame(Player &player, int topScore);
 
     protected:
     private:
-        void _CreateMap(void);
-        void _ClearMap(void);
-        void _SpawnFruit(void);
+        void createMap(void);
+        void clearMap(void);
+        void spawnFruit(void);
 
         char **_map;
         int _rowCount;
