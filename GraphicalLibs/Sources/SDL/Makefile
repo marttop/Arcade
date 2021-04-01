@@ -7,7 +7,7 @@
 
 SRC			=	sdlLib.cpp
 
-CXXFLAGS 	+=	-Wall -Wextra -I../../Interface -fPIC -lSDL2main -lSDL2 -lSDL2_image -g3
+CXXFLAGS 	+=	-Wall -Wextra -I../../Interface -I./Utils -fPIC -lSDL2main -lSDL2 -lSDL2_image -g3
 NAME 		= 	../../../lib/arcade_sdl2.so
 
 OBJ = $(SRC:.cpp=.o)

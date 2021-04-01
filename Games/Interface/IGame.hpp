@@ -8,14 +8,20 @@
 #ifndef IGAME_HPP_
 #define IGAME_HPP_
 
-#include "IGfx.hpp"
+#include <string>
+#include <vector>
+#include "Key.hpp"
 
 class IGame {
     public:
         virtual ~IGame(){};
-        virtual void init(IGfx *gfx, const std::string &map) = 0;
-        virtual void run() = 0;
-        virtual void display() const = 0;
+        virtual void init(const std::string &map) = 0;
+        virtual void update() = 0;
+
+        virtual std::vector<std::string> getMap() const = 0;
+        virtual size_t getScore() const = 0;
+
+        virtual void setKeyPressed(Key k);
 };
 
 #endif /* !IGAME_HPP_ */

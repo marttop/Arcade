@@ -11,7 +11,7 @@ SRC			= 	main.cpp \
 				Utils.cpp \
 				Score.cpp \
 
-CXXFLAGS 	=	-Wall -Wextra -g3 -O0
+CXXFLAGS 	=	-I./Utils -Wall -Wextra -g3 -O0
 NAME 		= 	Snake
 
 OBJ = $(SRC:.cpp=.o)
