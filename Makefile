@@ -10,25 +10,20 @@ NAME			=	test
 CXX				=	g++
 
 DIR1			=	./GraphicalLibs/Interface/
-DIR2			=	./Games/Pacman/
+DIR2			=	./DL/
 DIR3			=	./Games/Interface/
 DIR4			=	./GraphicalLibs/Sources/SDL/
+
+CALL_MAKE_GAMES	= cd Games/Pacman && make
+CALL_MAKE_LIBS	= cd GraphicalLibs/Sources/SDL && make
 
 INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4)
 INC_PARAMS		=	$(foreach d, $(INC), -I$d)
 
-CXXFLAGS		=	-Wall -Wextra $(INC_PARAMS)
+CXXFLAGS		=	-Wall -Wextra $(INC_PARAMS) -ldl
 
-LDFLAGS			=	-lSDL2main -lSDL2 -lSDL2_image -g3
-
-SRC				=	./Games/Pacman/main.cpp \
-					./Games/Pacman/Ghost.cpp \
-					./Games/Pacman/Entity.cpp \
-					./Games/Pacman/Map.cpp \
-					./Games/Pacman/Player.cpp \
-					./Games/Pacman/Pacman.cpp \
-					./Games/Pacman/Utils.cpp \
-					./GraphicalLibs/Sources/SDL/sdlLib.cpp \
+SRC				=	main.cpp \
+					./DL/DL.cpp \
 
 OBJ				=	$(SRC:.cpp=.o)
 
@@ -37,13 +32,19 @@ RM				=	rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS)
+	$(CALL_MAKE_GAMES)
+	$(CALL_MAKE_LIBS)
+	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:
 	$(RM) $(OBJ)
+	cd Games/Pacman && make clean
+	cd GraphicalLibs/Sources/SDL && make clean
 
 fclean: clean
 	$(RM) $(NAME)
+	cd Games/Pacman && make fclean
+	cd GraphicalLibs/Sources/SDL && make fclean
 
 re: fclean all
 

@@ -101,3 +101,13 @@ void sdlLib::refresh()
 {
     SDL_RenderPresent(backGround);
 }
+
+extern "C" IGfx *createGFX()
+{
+    return (new sdlLib);
+}
+
+extern "C" void destroyGFX(IGfx *lib)
+{
+    delete lib;
+}

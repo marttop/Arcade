@@ -91,3 +91,13 @@ void Pacman::moveGhosts()
         this->g[i]->move();
     }
 }
+
+extern "C" IGame *createGame()
+{
+    return (new Pacman);
+}
+
+extern "C" void destroyGame(IGame *game)
+{
+    delete game;
+}

@@ -5,23 +5,22 @@
 ## Makefile
 ##
 
-SRC			= 	main.cpp \
-				Map.cpp \
+SRC			=	Map.cpp \
 				Entity.cpp \
 				Utils.cpp \
 				Player.cpp \
 				Pacman.cpp \
 				Ghost.cpp
 
-CXXFLAGS 	=	-Wall -Wextra -g3 -O0
-NAME 		= 	Pacman
+CXXFLAGS 	=	-Wall -Wextra -I../../GraphicalLibs/Interface/ -I../Interface -fPIC
+NAME 		= 	../../lib/arcade_pacman.so
 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	g++ -o $(NAME) $(OBJ)
+	g++ -shared -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:
 	rm -f $(OBJ)
