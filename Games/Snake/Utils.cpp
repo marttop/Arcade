@@ -7,7 +7,8 @@
 
 #include "Utils.hpp"
 
-char getch(void) {
+char getch(void)
+{
     char buf = 0;
     struct termios old;
     if (tcgetattr(0, &old) < 0) perror("tcsetattr()");
