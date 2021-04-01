@@ -9,6 +9,7 @@
 #define ENTITY_HPP_
 
 #include "Map.hpp"
+#include "IGfx.hpp"
 
 #define UP_ARROW 65
 #define DOWN_ARROW 66
@@ -39,11 +40,11 @@ class Entity {
         void moveLeft();
         void moveRight();
         void move();
-        void setDir(Direction dir);
+        void setDir(Key dir);
     protected:
         Map *_map;
-        int _x;
-        int _y;
+        std::size_t _x;
+        std::size_t _y;
         Direction _dir;
 
     private:

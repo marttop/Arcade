@@ -10,15 +10,68 @@
 Pacman::Pacman()
 {
     std::srand(std::time(0));
-    this->p = new Player(&this->m);
-    this->_createGhosts();
+    this->_p = new Player(&this->m);
+    this->createGhosts();
+    this->_lib = nullptr;
 }
 
 Pacman::~Pacman()
 {
 }
 
-void Pacman::Pacman::_createGhosts()
+void Pacman::init(IGfx *gfx, const std::string &map)
+{
+    (void)map;
+    this->_lib = gfx;
+}
+
+void Pacman::run()
+{
+    for (; (this->_input = _lib->getKeyPressed()) != K_EXIT;) {
+        static clock_t currTime = 0;
+        static clock_t prevTime = 0;
+
+        currTime = std::clock();
+	    if (this->_input != 0)
+	    	this->_p->setDir(this->_input);
+	    if (currTime - prevTime >= 100000) {
+	    	this->_p->move();
+            this->moveGhosts();
+	    	prevTime = currTime;
+	    }
+		this->display();
+    }
+}
+
+void Pacman::display() const
+{
+    if (this->_lib) {
+        this->_lib->clear();
+        parser();
+        _lib->refresh();
+    }
+}
+
+void Pacman::parser() const
+{
+    for (size_t i = 0; i < this->m.map.size(); i++) {
+        for (size_t j = 0; j < this->m.map[i].size(); j++) {
+            char c = this->m.map[i][j];
+            if (c == 'G') {
+                this->_lib->drawRect(j, i, ENEMY);
+            } else if (c == '#') {
+                this->_lib->drawRect(j, i, WALL);
+            } else if (c == '@') {
+                this->_lib->drawRect(j, i, PLAYER);
+            } else {
+                this->_lib->drawRect(j, i, BACKGROUND);
+            }
+        }
+    }
+}
+
+
+void Pacman::Pacman::createGhosts()
 {
     int nb = 0;
     for (size_t i = 0; i < this->m.map.size(); i++) {
@@ -31,35 +84,10 @@ void Pacman::Pacman::_createGhosts()
     }
 }
 
-void Pacman::Pacman::_moveGhosts()
+void Pacman::moveGhosts()
 {
     for (size_t i = 0; i < this->g.size(); i++) {
         this->g[i]->moveGhost();
         this->g[i]->move();
-    }
-}
-
-void Pacman::Pacman::gameInterface()
-{
-    static clock_t currTime = 0;
-    static clock_t prevTime = 0;
-
-    currTime = std::clock();
-	if (this->_input != 0)
-		this->p->setDir((Entity::Direction)this->_input);
-	if (currTime - prevTime >= 100000) {
-		std::cout << "\e[1;1H\e[2J";
-		this->p->move();
-        this->_moveGhosts();
-		std::cout << "Score: " << this->m.getScore() << std::endl << std::endl;
-		this->m.printMap();
-		prevTime = currTime;
-	}
-}
-
-void Pacman::Pacman::launch()
-{
-    for (; (this->_input = getch()) != 'x';) {
-		this->gameInterface();
     }
 }

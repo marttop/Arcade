@@ -11,20 +11,24 @@
 #include "Utils.hpp"
 #include "Player.hpp"
 #include "Ghost.hpp"
+#include "IGame.hpp"
 
-class Pacman {
+class Pacman : public IGame {
     public:
         Pacman();
         ~Pacman();
 
-        void launch();
-        void gameInterface();
+        void init(IGfx *gfx, const std::string &map);
+        void run();
+        void display() const;
     protected:
     private:
-        void _createGhosts();
-        void _moveGhosts();
-        char _input;
-        Player *p;
+        void createGhosts();
+        void moveGhosts();
+        void parser() const;
+        Key _input;
+        Player *_p;
+        IGfx *_lib;
         std::vector<Ghost *> g;
         Map m;
 };

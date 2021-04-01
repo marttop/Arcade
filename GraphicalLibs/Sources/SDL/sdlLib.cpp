@@ -26,8 +26,6 @@ bool sdlLib::init(const std::string &nth)
                                     1920, 1080, SDL_RENDERER_ACCELERATED);
 
     backGround = SDL_CreateRenderer(window, -1, 0);
-
-    // SDL_SetRenderDrawColor(backGround, 0, 0, 255, 255);
     SDL_RenderClear(backGround);
     SDL_RenderPresent(backGround);
 
@@ -38,12 +36,20 @@ Key sdlLib::getKeyPressed()
 {
     SDL_Event event;
 
-    while(SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT)
-            return K_EXIT;
+            return (K_EXIT);
+        if (event.key.keysym.sym == SDLK_LEFT)
+            return (K_LEFT);
+        if (event.key.keysym.sym == SDLK_RIGHT)
+            return (K_RIGHT);
+        if (event.key.keysym.sym == SDLK_DOWN)
+            return (K_DOWN);
+        if (event.key.keysym.sym == SDLK_UP)
+            return (K_UP);
     }
 
-    return NONE;
+    return (NONE);
 }
 void sdlLib::clear()
 {
@@ -58,13 +64,13 @@ void sdlLib::drawRect(size_t x, size_t y, Rects entity)
     SDL_Texture *text = NULL;
     listText.push_back(text);
     if (entity == WALL) {
-        text = IMG_LoadTexture(backGround, "bin/wall.jpg");
+        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/wall.jpg");
     } else if (entity == BACKGROUND) {
-        text = IMG_LoadTexture(backGround, "bin/background.png");
+        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/background.png");
     } else if (entity == PLAYER) {
-        text = IMG_LoadTexture(backGround, "bin/pacmanStrong.png");
+        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/pacmanStrong.png");
     } else if (entity == ENEMY) {
-        text = IMG_LoadTexture(backGround, "bin/pacmanWeak.png");
+        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/pacmanWeak.png");
     }
 
     SDL_Rect src;
@@ -75,16 +81,19 @@ void sdlLib::drawRect(size_t x, size_t y, Rects entity)
     src.h = 50;
     src.w = 50;
 
-    dst.x = x;
-    dst.y = y;
-    dst.h = 50 / 2;
-    dst.w = 50 / 2;
+    dst.x = x * 25;
+    dst.y = y * 25;
+    dst.h = 25;
+    dst.w = 25;
 
     SDL_RenderCopy(backGround, text, &src, &dst);
 }
 
 void sdlLib::drawText(size_t x, size_t y, std::string text)
 {
+    (void)x;
+    (void)y;
+    (void)text;
 
 }
 

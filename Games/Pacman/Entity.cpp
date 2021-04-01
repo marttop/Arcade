@@ -39,15 +39,28 @@ Entity::~Entity()
 {
 }
 
-void Entity::Entity::setDir(Direction dir)
+void Entity::Entity::setDir(Key dir)
 {
-    this->_dir = dir;
+    switch (dir) {
+        case K_UP:
+            _dir = UP;
+            break;
+        case K_DOWN:
+            _dir = DOWN;
+            break;
+        case K_LEFT:
+            _dir = LEFT;
+            break;
+        case K_RIGHT:
+            _dir = RIGHT;
+            break;
+        default:
+            break;
+    }
 }
 
 void Entity::Entity::move()
 {
-
-
     switch (this->_dir) {
         case UP:
             this->moveUp();

@@ -5,15 +5,15 @@
 ** main
 */
 #include "Pacman.hpp"
+#include "sdlLib.hpp"
 
 int main(void)
 {
-	try {
-        Pacman game;
-		game.launch();
-	}
-	catch (std::exception const &e) {
-		std::cerr << e.what() << std::endl;
-		return (84);
-	}
+    Pacman jeux;
+    sdlLib fuck;
+
+    fuck.init("yesy");
+
+    jeux.init(&fuck, "cool");
+    jeux.run();
 }
