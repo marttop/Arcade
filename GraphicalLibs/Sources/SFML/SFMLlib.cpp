@@ -54,15 +54,7 @@ void SFMLlib::clear()
 
 void SFMLlib::drawRect(size_t x, size_t y, Rects entity)
 {
-    if (entity == WALL) {
-        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/wall.jpg");
-    } else if (entity == BACKGROUND) {
-        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/background.png");
-    } else if (entity == PLAYER) {
-        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/pacmanStrong.png");
-    } else if (entity == ENEMY) {
-        text = IMG_LoadTexture(backGround, "GraphicalLibs/Sources/SDL/bin/pacmanWeak.png");
-    }
+
 }
 
 void SFMLlib::drawText(size_t x, size_t y, std::string text)
