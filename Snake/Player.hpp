@@ -18,17 +18,19 @@
 #define UP_ARROW 65
 #define DOWN_ARROW 66
 
+class Map;
+
 class Player {
     public:
         Player(Map *map);
         ~Player();
-        int DrawSnake(void);
-        int MoveSnake(char c);
-        int GetScore(void);
+        int drawSnake(void);
+        int moveSnake(char c);
+        int getScore(void);
 
     protected:
     private:
-        void _GrowSnake(void);
+        void growSnake(void);
 
         int _x;
         int _y;
