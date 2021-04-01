@@ -15,6 +15,7 @@
 #include <SDL2/SDL_timer.h>
 
 #include <vector>
+#include <map>
 
 class sdlLib : public IGfx
 {

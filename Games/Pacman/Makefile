@@ -12,7 +12,7 @@ SRC			=	Map.cpp \
 				Pacman.cpp \
 				Ghost.cpp
 
-CXXFLAGS 	=	-Wall -Wextra -I../../GraphicalLibs/Interface/ -I../Interface -fPIC
+CXXFLAGS 	=	-Wall -Wextra -I./Utils -I../Interface -fPIC
 NAME 		= 	../../lib/arcade_pacman.so
 
 OBJ = $(SRC:.cpp=.o)
