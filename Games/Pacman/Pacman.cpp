@@ -32,7 +32,7 @@ void Pacman::run()
         static clock_t prevTime = 0;
 
         currTime = std::clock();
-	    if (this->_input != 0)
+	    if (this->_input != NONE)
 	    	this->_p->setDir(this->_input);
 	    if (currTime - prevTime >= 100000) {
 	    	this->_p->move();
