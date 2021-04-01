@@ -33,11 +33,7 @@ int main(int ac, char **av)
     createGFX *lib = (createGFX *)dl.sym("createGFX");
     IGfx *_lib = lib();
 
-    // dl.close();
-
-
     _lib->init("");
-    std::cout << "nique ta mere" << std::endl;
     _game->init(_lib, "nullptr");
     _game->run();
     return (0);
