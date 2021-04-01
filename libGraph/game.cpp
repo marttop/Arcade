@@ -53,13 +53,6 @@ void Game::parser() const
     }
 }
 
-void Game::run()
-{
-    while (_gfx && _gfx->getKeyPressed() != Key::K_EXIT) {
-        display();
-    }
-}
-
 void Game::display() const
 {
     if (_gfx) {
@@ -71,5 +64,11 @@ void Game::display() const
         for (std::string str : _map)
             std::cout << str << std::endl;
         std::cout << "--" << std::endl;
+    }
+}
+void Game::run()
+{
+    while (_gfx && _gfx->getKeyPressed() != Key::K_EXIT) {
+        display();
     }
 }
