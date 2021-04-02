@@ -19,6 +19,9 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
 {
     (void)map;
 
+    this->_currTime = SDL_GetTicks();
+    this->_prevTime = this->_currTime;
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cout << "error initializing SDL: " << SDL_GetError() << std::endl;
         return false;
@@ -75,9 +78,7 @@ void SDLlib::display(std::vector<std::string> map)
 
 Key SDLlib::getKeyPressed()
 {
-    static clock_t currTime = 0;
-    static clock_t prevTime = 0;
-    currTime = std::clock();
+    this->_currTime = SDL_GetTicks();
 
     SDL_Event event;
 
@@ -95,7 +96,7 @@ Key SDLlib::getKeyPressed()
                 return (K_DOWN);
             if (event.key.keysym.sym == SDLK_UP)
                 return (K_UP);
-            if (currTime - prevTime >= 1000000) {
+            if (this->_currTime - this->_prevTime >= 1000) {
                 if (event.key.keysym.sym == SDLK_1) {
                     SDL_DestroyWindow(_window);
                     return (K_PREV_LIB);
@@ -112,7 +113,7 @@ Key SDLlib::getKeyPressed()
                     SDL_DestroyWindow(_window);
                     return (K_NEXT_GAME);
                 }
-                prevTime = currTime;
+                this->_prevTime = this->_currTime;
             }
         }
     }
