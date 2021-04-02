@@ -25,7 +25,7 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     }
 
     _window = SDL_CreateWindow(
-        "GAME",
+        "SDL",
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
         1920,
