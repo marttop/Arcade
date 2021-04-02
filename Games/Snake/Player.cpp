@@ -100,10 +100,18 @@ size_t Player::getScore() const
 std::map<char, std::string> Player::getTiles() const
 {
     std::map<char, std::string> tileMap;
-
-    tileMap.insert(std::make_pair('#', "assets/wall.png"));
-    tileMap.insert(std::make_pair('S', "assets/pacman.png"));
-    tileMap.insert(std::make_pair('F', "assets/gum.png"));
+    std::ifstream file;
+    std::string line;
+    file.open("db/Snake/config.txt");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            tileMap.insert(std::make_pair(
+                line[line.find('=') + 1],
+                line.substr(0, line.find('='))
+            ));
+        }
+        file.close();
+    }
 
     return (tileMap);
 }

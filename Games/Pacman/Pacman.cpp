@@ -77,10 +77,18 @@ void Pacman::setKeyPressed(Key k)
 std::map<char, std::string> Pacman::getTiles() const
 {
     std::map<char, std::string> tileMap;
-
-    tileMap.insert(std::make_pair('#', "assets/wall.png"));
-    tileMap.insert(std::make_pair('@', "assets/pacman.png"));
-    tileMap.insert(std::make_pair('G', "assets/gum.png"));
+    std::ifstream file;
+    std::string line;
+    file.open("db/Pacman/config.txt");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            tileMap.insert(std::make_pair(
+                line[line.find('=') + 1],
+                line.substr(0, line.find('='))
+            ));
+        }
+        file.close();
+    }
 
     return (tileMap);
 }

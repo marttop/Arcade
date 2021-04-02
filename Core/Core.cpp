@@ -13,10 +13,7 @@ Core::Core(char *lib)
     this->openGame((char *)"lib/arcade_pacman.so");
     this->_game->init("");
     this->_lib->init("", this->_game->getTiles());
-    _libNames.push_back("lib/arcade_sfml.so");
-    _libNames.push_back("lib/arcade_sdl2.so");
-    _gameNames.push_back("lib/arcade_pacman.so");
-    _gameNames.push_back("lib/arcade_snake.so");
+    this->parseLibs();
     _libIdx = 0;
     for (size_t i = 0; i != _libNames.size(); i++) {
         if (strcmp(_libNames[i].c_str(), lib) == 0)
@@ -28,6 +25,22 @@ Core::Core(char *lib)
 
 Core::~Core()
 {
+}
+
+void Core::parseLibs()
+{
+    std::ifstream file;
+    std::string line;
+    file.open("db/Lib/config.txt");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            if (line.substr(line.find('=') + 1) == "game")
+                _gameNames.push_back(line.substr(0, line.find('=')));
+            if (line.substr(line.find('=') + 1) == "gfx")
+                _libNames.push_back(line.substr(0, line.find('=')));
+        }
+        file.close();
+    }
 }
 
 void Core::openGfx(const char *path)

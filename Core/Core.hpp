@@ -13,6 +13,7 @@
 #include "IGfx.hpp"
 #include <ctime>
 #include <cstring>
+#include <fstream>
 
 class Core {
     public:
@@ -41,6 +42,7 @@ class Core {
         void openGame(const char *path);
         void changeGfxLib(const char *path);
         void changeGameLib(const char *path);
+        void parseLibs();
         void handleKeyPressed();
 };
 

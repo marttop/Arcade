@@ -1,0 +1,4 @@
+lib/arcade_pacman.so=game
+lib/arcade_snake.so=game
+lib/arcade_sdl2.so=gfx
+lib/arcade_sfml.so=gfx
