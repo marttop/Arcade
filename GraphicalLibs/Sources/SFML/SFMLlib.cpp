@@ -9,31 +9,55 @@
 
 SFMLlib::SFMLlib()
 {
-    _window.create(sf::VideoMode(1920, 1080), "Game");
-    _window.setFramerateLimit(60);
-    _textures[0].loadFromFile("assets/pacmanStrong.png");
-    _textures[1].loadFromFile("assets/pacmanWeak.png");
-    _textures[2].loadFromFile("assets/wall.png");
-
 }
+
 
 SFMLlib::~SFMLlib()
 {
 }
 
-bool SFMLlib::init(const std::string &map)
+bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
 {
     (void)map;
-    for (int i = 0; i < 3; i++) {
-        _sprites[i].setTexture(_textures[i]);
+
+    _window.create(sf::VideoMode(1920, 1080), "SFML");
+    // _window.setFramerateLimit(60);
+
+    for (auto itr : tileMap) {
+        _listText.push_back(new sf::Texture);
+        _listText.back()->loadFromFile(itr.second);
+        _tileMap.insert(std::make_pair(itr.first, new sf::Sprite));
+        _tileMap[itr.first]->setTexture(*_listText.back());
     }
+
+    return (true);
+}
+
+void SFMLlib::display(std::vector<std::string> map)
+{
+    char c;
+
+    _window.clear();
+
+    for (size_t i = 0; i < map.size(); i++) {
+        for (size_t j = 0; j < map[i].size(); j++) {
+            c = map[i][j];
+            if (_tileMap[c]) {
+                _tileMap[c]->setPosition(sf::Vector2f(j * 25, i * 25));
+                _window.draw(*_tileMap[c]);
+            }
+        }
+    }
+    _window.display();
 }
 
 Key SFMLlib::getKeyPressed()
 {
     while (_window.pollEvent(_event)) {
-        if (_event.type == sf::Event::Closed)
+        if (_event.type == sf::Event::Closed)  {
             _window.close();
+            return (K_EXIT);
+        }
         if (_event.type == sf::Event::KeyPressed) {
             if (_event.key.code == sf::Keyboard::Up)
                 return (K_UP);
@@ -45,25 +69,23 @@ Key SFMLlib::getKeyPressed()
                 return (K_RIGHT);
         }
     }
+    return (NONE);
 }
 
-void SFMLlib::clear()
-{
-
-}
-
-void SFMLlib::drawRect(size_t x, size_t y, Rects entity)
-{
-
-}
 
 void SFMLlib::drawText(size_t x, size_t y, std::string text)
 {
-
+    (void)x;
+    (void)y;
+    (void)text;
 }
 
-void SFMLlib::refresh()
+extern "C" IGfx *createGFX()
 {
-
+    return (new SFMLlib);
 }
 
+extern "C" void destroyGFX(IGfx *lib)
+{
+    delete lib;
+}

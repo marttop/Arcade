@@ -5,25 +5,28 @@
 ## Makefile
 ##
 
-NAME			=	test
+NAME			=	arcade
 
 CXX				=	g++
 
 DIR1			=	./GraphicalLibs/Interface/
-DIR2			=	./DL/
+DIR2			=	./Core/
 DIR3			=	./Games/Interface/
 DIR4			=	./GraphicalLibs/Sources/SDL/
+DIR5			=	./Utils/
 
-CALL_MAKE_GAMES	= cd Games/Pacman && make
-CALL_MAKE_LIBS	= cd GraphicalLibs/Sources/SDL && make
+CALL_MAKE_GAMES	=	cd Games/Pacman && make
+CALL_MAKE_SDL	=	cd GraphicalLibs/Sources/SDL && make
+CALL_MAKE_SFML	=	cd GraphicalLibs/Sources/SFML && make
 
-INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4)
+INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4) $(DIR5)
 INC_PARAMS		=	$(foreach d, $(INC), -I$d)
 
 CXXFLAGS		=	-Wall -Wextra $(INC_PARAMS) -ldl
 
-SRC				=	main.cpp \
-					./DL/DL.cpp \
+SRC				=	./Core/main.cpp \
+					./Core/DL.cpp \
+					./Core/Core.cpp \
 
 OBJ				=	$(SRC:.cpp=.o)
 
@@ -33,7 +36,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CALL_MAKE_GAMES)
-	$(CALL_MAKE_LIBS)
+	$(CALL_MAKE_SDL)
+	$(CALL_MAKE_SFML)
 	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:

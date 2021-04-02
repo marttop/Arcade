@@ -15,24 +15,25 @@
 #include <SDL2/SDL_timer.h>
 
 #include <vector>
+#include <iostream>
 #include <map>
 
-class sdlLib : public IGfx
+class SDLlib : public IGfx
 {
     private:
-        SDL_Window *window;
-        SDL_Renderer *backGround;
+        SDL_Window *_window;
+        SDL_Renderer *_background;
 
-        std::vector<SDL_Texture *> listText;
+        std::map<char, SDL_Texture *> _listText;
     public:
-        sdlLib();
+        SDLlib();
+        ~SDLlib();
 
-        bool init(const std::string &map);
+
+        bool init(const std::string &map, std::map<char, std::string>);
+        void display(std::vector<std::string>);
         Key getKeyPressed();
-        void clear();
-        void drawRect(size_t x, size_t y, Rects fion);
         void drawText(size_t x, size_t y, std::string text);
-        void refresh();
 };
 
 #endif

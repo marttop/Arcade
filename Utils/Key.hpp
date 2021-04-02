@@ -20,4 +20,17 @@ typedef enum Key
     NONE,
 } Key;
 
+typedef enum Rects
+{
+    WALL,
+    PACMAN,
+    SNAKE_HEAD,
+    SNAKE,
+    GHOST,
+    FRUIT,
+    GUM,
+    BUTTON,
+    BACKGROUND,
+} Rects;
+
 #endif

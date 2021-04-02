@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "Key.hpp"
 
 class IGame {
@@ -18,10 +19,11 @@ class IGame {
         virtual void init(const std::string &map) = 0;
         virtual void update() = 0;
 
+        virtual std::map<char, std::string> getTiles() const = 0;
         virtual std::vector<std::string> getMap() const = 0;
         virtual size_t getScore() const = 0;
 
-        virtual void setKeyPressed(Key k);
+        virtual void setKeyPressed(Key k) = 0;
 };
 
 #endif /* !IGAME_HPP_ */

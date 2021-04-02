@@ -9,7 +9,7 @@
 #define ENTITY_HPP_
 
 #include "Map.hpp"
-#include "IGfx.hpp"
+#include "Key.hpp"
 
 #define UP_ARROW 65
 #define DOWN_ARROW 66

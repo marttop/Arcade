@@ -21,7 +21,7 @@ Entity::Entity(EntityType type, Map *map)
     this->_on = ' ';
 }
 
-void Entity::Entity::_getPos()
+void Entity::_getPos()
 {
     int i = 0;
     for (std::string s : this->_map->map) {
@@ -39,7 +39,7 @@ Entity::~Entity()
 {
 }
 
-void Entity::Entity::setDir(Key dir)
+void Entity::setDir(Key dir)
 {
     switch (dir) {
         case K_UP:
@@ -59,7 +59,7 @@ void Entity::Entity::setDir(Key dir)
     }
 }
 
-void Entity::Entity::move()
+void Entity::move()
 {
     switch (this->_dir) {
         case UP:
@@ -79,7 +79,7 @@ void Entity::Entity::move()
     }
 }
 
-void Entity::Entity::moveUp()
+void Entity::moveUp()
 {
     if (this->_y > 0) {
         if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ') && this->_type == PLAYER) {
@@ -101,7 +101,7 @@ void Entity::Entity::moveUp()
     }
 }
 
-void Entity::Entity::moveDown()
+void Entity::moveDown()
 {
     if (this->_y < this->_map->map.size() - 1) {
         if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ') && this->_type == PLAYER) {
@@ -123,7 +123,7 @@ void Entity::Entity::moveDown()
     }
 }
 
-void Entity::Entity::moveLeft()
+void Entity::moveLeft()
 {
     if (this->_x > 0) {
         if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ') && this->_type == PLAYER) {
@@ -151,7 +151,7 @@ void Entity::Entity::moveLeft()
     }
 }
 
-void Entity::Entity::moveRight()
+void Entity::moveRight()
 {
     if (this->_x < this->_map->map[_y].size() - 1) {
         if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ') && this->_type == PLAYER) {

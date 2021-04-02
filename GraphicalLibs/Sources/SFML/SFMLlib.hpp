@@ -20,19 +20,17 @@ class SFMLlib : public IGfx {
         SFMLlib();
         ~SFMLlib();
 
-        bool init(const std::string &map);
+        bool init(const std::string &map, std::map<char, std::string>);
+        void display(std::vector<std::string>);
         Key getKeyPressed();
-        void clear();
-        void drawRect(size_t x, size_t y, Rects fion);
         void drawText(size_t x, size_t y, std::string text);
-        void refresh();
 
     protected:
     private:
         sf::RenderWindow _window;
         sf::Event _event;
-        sf::Texture _textures[3];
-        sf::Sprite _sprites[3];
+        std::vector<sf::Texture *> _listText;
+        std::map<char, sf::Sprite *> _tileMap;
 
 };
 

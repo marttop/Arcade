@@ -5,10 +5,10 @@
 ## Makefile
 ##
 
-SRC			=	SDLlib.cpp
+SRC			=	SFMLlib.cpp
 
-CXXFLAGS 	+=	-Wall -Wextra -I../../Interface -I../../../Utils -fPIC -lSDL2main -lSDL2 -lSDL2_image -g3
-NAME 		= 	../../../lib/arcade_sdl2.so
+CXXFLAGS 	+=	-Wall -Wextra -I../../Interface -I../../../Utils -fPIC -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -g3
+NAME 		= 	../../../lib/arcade_sfml.so
 
 OBJ = $(SRC:.cpp=.o)
 

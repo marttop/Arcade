@@ -15,7 +15,7 @@ Ghost::Ghost(Map *map, int x, int y) : Entity(GHOST, map)
     this->start = 0;
 }
 
-void Ghost::Ghost::moveGhost()
+void Ghost::moveGhost()
 {
     if (this->_dir == NONE) {
         int i = 0;

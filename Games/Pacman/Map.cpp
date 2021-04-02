@@ -20,7 +20,7 @@ Map::~Map()
 {
 }
 
-void Map::Map::_readMap()
+void Map::_readMap()
 {
     std::string line;
     while (getline(this->_file, line)) {
@@ -28,19 +28,19 @@ void Map::Map::_readMap()
     }
 }
 
-void Map::Map::printMap() const
+void Map::printMap() const
 {
     for (std::string s : this->map) {
         std::cout << s << std::endl;
     }
 }
 
-int Map::Map::getScore() const
+int Map::getScore() const
 {
     return (this->_score);
 }
 
-void Map::Map::setScore(int score)
+void Map::setScore(int score)
 {
     this->_score = score;
 }
