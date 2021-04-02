@@ -10,7 +10,7 @@
 Map::Map()
 {
     std::srand(std::time(0));
-    _file.open("db/Snake/map.txt");
+    _file.open("db/db_Snake/map.txt");
     if (!_file.is_open())
         throw std::invalid_argument("No 'map.txt' found");
     this->readMap();

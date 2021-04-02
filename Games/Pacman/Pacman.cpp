@@ -79,7 +79,7 @@ std::map<char, std::string> Pacman::getTiles() const
     std::map<char, std::string> tileMap;
     std::ifstream file;
     std::string line;
-    file.open("db/Pacman/config.txt");
+    file.open("db/db_Pacman/config.txt");
     if (file.is_open()) {
         while (getline(file, line)) {
             tileMap.insert(std::make_pair(

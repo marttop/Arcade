@@ -9,7 +9,7 @@
 
 Map::Map()
 {
-    _file.open("db/Pacman/map.txt");
+    _file.open("db/db_Pacman/map.txt");
     if (!_file.is_open())
         throw std::invalid_argument("No 'map.txt' found");
     this->_readMap();
