@@ -1,6 +1,8 @@
 .vscode
 *.o
+*.so
 a.out
 vgcore*
 Snake/Snake
 Pacman/Pacman
+arcade

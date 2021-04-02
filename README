@@ -1,3 +1,3 @@
-pour install le package SDL_image sur fedora:
+To install the SDL_image package on fedora:
 
      sudo dnf install SDL2_image SDL2_image-devel SDL2_ttf SDL2_ttf-devel

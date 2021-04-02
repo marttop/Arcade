@@ -44,11 +44,13 @@ clean:
 	$(RM) $(OBJ)
 	cd Games/Pacman && make clean
 	cd GraphicalLibs/Sources/SDL && make clean
+	cd GraphicalLibs/Sources/SFML && make clean
 
 fclean: clean
 	$(RM) $(NAME)
 	cd Games/Pacman && make fclean
 	cd GraphicalLibs/Sources/SDL && make fclean
+	cd GraphicalLibs/Sources/SFML && make fclean
 
 re: fclean all
 
