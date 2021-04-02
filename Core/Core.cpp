@@ -31,7 +31,7 @@ void Core::parseLibs()
 {
     std::ifstream file;
     std::string line;
-    file.open("db/Lib/config.txt");
+    file.open("db/libs/config.txt");
     if (file.is_open()) {
         while (getline(file, line)) {
             if (line.substr(line.find('=') + 1) == "game")
