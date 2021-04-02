@@ -24,7 +24,7 @@ class SDLlib : public IGfx
         SDL_Window *_window;
         SDL_Renderer *_background;
 
-        std::map<char, SDL_Texture *> _listText;
+        std::map<char, std::string> _listText;
     public:
         SDLlib();
         ~SDLlib();

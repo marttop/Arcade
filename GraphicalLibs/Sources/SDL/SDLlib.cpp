@@ -33,9 +33,7 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
         SDL_RENDERER_ACCELERATED
     );
 
-    for (auto itr : tileMap) {
-        _listText.insert(std::make_pair(itr.first, IMG_LoadTexture(this->_background, itr.second.c_str())));
-    }
+    _listText = tileMap;
 
     _background = SDL_CreateRenderer(_window, -1, 0);
     SDL_RenderClear(_background);
@@ -66,7 +64,10 @@ void SDLlib::display(std::vector<std::string> map)
             dst.x = j * 25;
             dst.y = i * 25;
 
-            SDL_RenderCopy(_background, _listText[c], &src, &dst);
+            SDL_Texture *texture = nullptr;
+            texture = IMG_LoadTexture(this->_background, _listText[c].c_str());
+            SDL_RenderCopy(_background, texture, &src, &dst);
+            SDL_DestroyTexture(texture);
         }
     }
     SDL_RenderPresent(this->_background);

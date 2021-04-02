@@ -22,19 +22,18 @@ std::string DL::error()
 
 void DL::open(char *filepath, int flag)
 {
-    _cheddar = dlopen(filepath, flag);
-    std::cout << "de la merde" << std::endl;
-    if (!_cheddar) {
+    _handle = dlopen(filepath, flag);
+    if (!_handle) {
         throw std::invalid_argument(this->error());
     }
 }
 
 int DL::close()
 {
-   return (dlclose(_cheddar));
+   return (dlclose(_handle));
 }
 
 void *DL::sym(std::string name)
 {
-    return (dlsym(_cheddar, name.c_str()));
+    return (dlsym(_handle, name.c_str()));
 }

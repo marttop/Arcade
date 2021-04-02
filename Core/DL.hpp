@@ -23,7 +23,7 @@ class DL {
         void *sym(std::string name);
     protected:
     private:
-        void *_cheddar;
+        void *_handle;
 };
 
 #endif /* !DL_HPP_ */
