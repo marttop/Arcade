@@ -17,20 +17,11 @@ typedef enum Key
     K_SPACE,
     K_ESC,
     K_EXIT,
+    K_PREV_GAME,
+    K_NEXT_GAME,
+    K_PREV_LIB,
+    K_NEXT_LIB,
     NONE,
 } Key;
-
-typedef enum Rects
-{
-    WALL,
-    PACMAN,
-    SNAKE_HEAD,
-    SNAKE,
-    GHOST,
-    FRUIT,
-    GUM,
-    BUTTON,
-    BACKGROUND,
-} Rects;
 
 #endif

@@ -10,40 +10,27 @@
 Map::Map()
 {
     std::srand(std::time(0));
-    _rowCount = 15;
-    _colCount = 15;
+    _file.open("Games/Snake/map.txt");
+    if (!_file.is_open())
+        throw std::invalid_argument("No 'map.txt' found");
+    this->readMap();
+    _rowCount = _map.size();
+    _colCount = _map[0].size();
     _isFruit = 0;
-    createMap();
+    spawnFruit();
+    _file.close();
 }
 
 Map::~Map()
 {
-    for (int i = 0; i < _rowCount; i++)
-        delete []_map[i];
-    delete []_map;
 }
 
-void Map::createMap(void)
+void Map::readMap()
 {
-    _map = new char*[_rowCount + 1];
-    for (int i = 0; i < _rowCount; i++) {
-        _map[i] = new char[_colCount + 1];
-        std::memset(_map[i], ' ', _colCount);
-        _map[i][0] = '#';
-        _map[i][_colCount - 1] = '#';
-        _map[i][_colCount] = '\0';
+    std::string line;
+    while (getline(this->_file, line)) {
+        this->_map.push_back(line);
     }
-    _map[_rowCount] = NULL;
-    std::memset(_map[0], '#',  _colCount);
-    std::memset(_map[_rowCount - 1], '#',  _colCount);
-    spawnFruit();
-}
-
-void Map::printMap(void)
-{
-    for (int i = 0; i < _rowCount; i++)
-        std::cout << _map[i] << std::endl;
-    clearMap();
 }
 
 void Map::clearMap(void)
@@ -55,6 +42,8 @@ void Map::clearMap(void)
 
 int Map::setSnake(int x, int y)
 {
+    std::cout << x << " " << y << std::endl;
+    std::cout << _colCount << " " << _rowCount << std::endl;
     if (_map[y][x] == 'S' || _map[y][x] == '#')
         return (1);
     else if (_map[y][x] == 'F') {
@@ -92,15 +81,7 @@ void Map::spawnFruit(void)
     }
 }
 
-int Map::drawAsciiGame(Player &player, int topScore)
+std::vector<std::string> Map::getMap() const
 {
-    std::cout << "\e[1;1H\e[2J";
-    if (player.drawSnake() == 1) {
-        WriteTopScore(player.getScore(), topScore);
-        return (1);
-    }
-    std::cout << "TOP SCORE: " << topScore << std::endl;
-    std::cout << "YOUR SCORE: " << player.getScore() << std::endl << std::endl;
-    printMap();
-    return (0);
+    return (this->_map);
 }

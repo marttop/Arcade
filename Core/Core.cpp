@@ -9,30 +9,91 @@
 
 Core::Core(char *lib)
 {
-    this->_dlGfx.open(lib, RTLD_LAZY | RTLD_GLOBAL);
-    createGFX *gfx = (createGFX *)this->_dlGfx.sym("createGFX");
-    this->_lib = gfx();
-
-    this->_dlGame.open((char *)"lib/arcade_pacman.so", RTLD_LAZY | RTLD_GLOBAL);
-    createGame *game = (createGame *)this->_dlGame.sym("createGame");
-    this->_game = game();
-
-
+    this->openGfx(lib);
+    this->openGame((char *)"lib/arcade_pacman.so");
     this->_game->init("");
-    std::map<char, std::string> tileMap = this->_game->getTiles();
-    this->_lib->init("", tileMap);
-}
-
-void Core::run()
-{
-    Key k;
-    while ((k = this->_lib->getKeyPressed()) != K_EXIT) {
-        this->_game->setKeyPressed(k);
-        this->_game->update();
-        this->_lib->display(this->_game->getMap());
+    this->_lib->init("", this->_game->getTiles());
+    _libNames.push_back("lib/arcade_sfml.so");
+    _libNames.push_back("lib/arcade_sdl2.so");
+    _gameNames.push_back("lib/arcade_pacman.so");
+    _gameNames.push_back("lib/arcade_snake.so");
+    _libIdx = 0;
+    for (size_t i = 0; i != _libNames.size(); i++) {
+        if (strcmp(_libNames[i].c_str(), lib) == 0)
+            break;
+        _libIdx++;
     }
+    _gameIdx = 0;
 }
 
 Core::~Core()
 {
+}
+
+void Core::openGfx(const char *path)
+{
+    this->_dlGfx.open((char *)path, RTLD_LAZY | RTLD_GLOBAL);
+    createGFX *gfx = (createGFX *)this->_dlGfx.sym("createGFX");
+    this->_lib = gfx();
+}
+
+void Core::openGame(const char *path)
+{
+    this->_dlGame.open((char *)path, RTLD_LAZY | RTLD_GLOBAL);
+    createGame *game = (createGame *)this->_dlGame.sym("createGame");
+    this->_game = game();
+}
+
+void Core::changeGfxLib(const char *path)
+{
+    //destroyGFX *dGfx = (destroyGFX *)this->_dlGfx.sym("destroyGFX");
+    //if (_lib != nullptr) dGfx(_lib);
+    this->_dlGfx.close();
+    this->openGfx(path);
+    this->_lib->init("", this->_game->getTiles());
+}
+
+void Core::changeGameLib(const char *path)
+{
+    //.destroyGame *dGame = (destroyGame *)this->_dlGame.sym("destroyGame");
+    //.if (_game != nullptr) dGame(_game);
+    this->_dlGame.close();
+    this->openGame(path);
+    this->_game->init("");
+}
+
+void Core::handleKeyPressed()
+{
+    if (this->_k == K_PREV_LIB) {
+        _libIdx--;
+        if (_libIdx < 0) _libIdx = _libNames.size() - 1;
+        this->changeGfxLib(_libNames[_libIdx].c_str());
+    }
+    if (this->_k == K_NEXT_LIB) {
+        _libIdx++;
+        if (_libIdx > (int)_libNames.size() - 1) _libIdx = 0;
+        this->changeGfxLib(_libNames[_libIdx].c_str());
+    }
+    if (this->_k == K_PREV_GAME) {
+        _gameIdx--;
+        if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
+        this->changeGameLib(_gameNames[_gameIdx].c_str());
+        this->changeGfxLib(_libNames[_libIdx].c_str());
+    }
+    if (this->_k == K_NEXT_GAME) {
+        _gameIdx++;
+        if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
+        this->changeGameLib(_gameNames[_gameIdx].c_str());
+        this->changeGfxLib(_libNames[_libIdx].c_str());
+    }
+}
+
+void Core::run()
+{
+    while ((this->_k = this->_lib->getKeyPressed()) != K_EXIT) {
+        this->handleKeyPressed();
+        this->_game->setKeyPressed(this->_k);
+        this->_game->update();
+        this->_lib->display(this->_game->getMap());
+    }
 }

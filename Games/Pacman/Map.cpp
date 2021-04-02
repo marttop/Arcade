@@ -14,6 +14,7 @@ Map::Map()
         throw std::invalid_argument("No 'map.txt' found");
     this->_readMap();
     this->_score = 0;
+    _file.close();
 }
 
 Map::~Map()

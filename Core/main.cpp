@@ -13,8 +13,14 @@ int main(int ac, char **av)
         std::cerr << "Using: ./arcade lib" << std::endl;
         return (84);
     }
-    Core core(av[1]);
 
-    core.run();
+    try {
+        Core core(av[1]);
+        core.run();
+    } catch (std::exception &error) {
+        std::cerr << error.what() << std::endl;
+        return (84);
+    }
+
     return (0);
 }

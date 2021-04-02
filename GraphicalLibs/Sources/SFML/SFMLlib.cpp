@@ -21,7 +21,7 @@ bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     (void)map;
 
     _window.create(sf::VideoMode(1920, 1080), "SFML");
-    // _window.setFramerateLimit(60);
+    _clock.restart();
 
     for (auto itr : tileMap) {
         _listText.push_back(new sf::Texture);
@@ -43,7 +43,7 @@ void SFMLlib::display(std::vector<std::string> map)
         for (size_t j = 0; j < map[i].size(); j++) {
             c = map[i][j];
             if (_tileMap[c]) {
-                _tileMap[c]->setPosition(sf::Vector2f(j * 25, i * 25));
+                _tileMap[c]->setPosition(sf::Vector2f(j * _tileMap[c]->getTextureRect().width, i * _tileMap[c]->getTextureRect().height));
                 _window.draw(*_tileMap[c]);
             }
         }
@@ -67,6 +67,25 @@ Key SFMLlib::getKeyPressed()
                 return (K_LEFT);
             if (_event.key.code == sf::Keyboard::Right)
                 return (K_RIGHT);
+            if (_clock.getElapsedTime().asSeconds() >= 1) {
+                _clock.restart();
+                if (_event.key.code == sf::Keyboard::Num1) {
+                    _window.close();
+                    return (K_PREV_LIB);
+                }
+                if (_event.key.code == sf::Keyboard::Num2) {
+                    _window.close();
+                    return (K_NEXT_LIB);
+                }
+                if (_event.key.code == sf::Keyboard::Num3) {
+                    _window.close();
+                    return (K_PREV_GAME);
+                }
+                if (_event.key.code == sf::Keyboard::Num4) {
+                    _window.close();
+                    return (K_NEXT_GAME);
+                }
+            }
         }
     }
     return (NONE);

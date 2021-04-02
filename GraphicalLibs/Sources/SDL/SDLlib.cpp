@@ -75,19 +75,46 @@ void SDLlib::display(std::vector<std::string> map)
 
 Key SDLlib::getKeyPressed()
 {
+    static clock_t currTime = 0;
+    static clock_t prevTime = 0;
+    currTime = std::clock();
+
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT)
+        if (event.type == SDL_QUIT) {
+            SDL_DestroyWindow(_window);
             return (K_EXIT);
-        if (event.key.keysym.sym == SDLK_LEFT)
-            return (K_LEFT);
-        if (event.key.keysym.sym == SDLK_RIGHT)
-            return (K_RIGHT);
-        if (event.key.keysym.sym == SDLK_DOWN)
-            return (K_DOWN);
-        if (event.key.keysym.sym == SDLK_UP)
-            return (K_UP);
+        }
+        if (event.type == SDL_KEYDOWN) {
+            if (event.key.keysym.sym == SDLK_LEFT)
+                return (K_LEFT);
+            if (event.key.keysym.sym == SDLK_RIGHT)
+                return (K_RIGHT);
+            if (event.key.keysym.sym == SDLK_DOWN)
+                return (K_DOWN);
+            if (event.key.keysym.sym == SDLK_UP)
+                return (K_UP);
+            if (currTime - prevTime >= 1000000) {
+                if (event.key.keysym.sym == SDLK_1) {
+                    SDL_DestroyWindow(_window);
+                    return (K_PREV_LIB);
+                }
+                if (event.key.keysym.sym == SDLK_2) {
+                    SDL_DestroyWindow(_window);
+                    return (K_NEXT_LIB);
+                }
+                if (event.key.keysym.sym == SDLK_3) {
+                    SDL_DestroyWindow(_window);
+                    return (K_PREV_GAME);
+                }
+                if (event.key.keysym.sym == SDLK_4) {
+                    SDL_DestroyWindow(_window);
+                    return (K_NEXT_GAME);
+                }
+                prevTime = currTime;
+            }
+        }
     }
 
     return (NONE);

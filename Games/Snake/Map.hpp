@@ -12,8 +12,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <unistd.h>
+#include <fstream>
 #include "Player.hpp"
-#include "Score.hpp"
 
 class Player;
 
@@ -21,22 +22,22 @@ class Map {
     public:
         Map();
         ~Map();
-        void printMap(void);
         int getRowCount(void);
         int getColCount(void);
         int setSnake(int x, int y);
-        int drawAsciiGame(Player &player, int topScore);
+        void clearMap(void);
+        std::vector<std::string> getMap() const;
 
     protected:
     private:
-        void createMap(void);
-        void clearMap(void);
         void spawnFruit(void);
+        void readMap();
 
-        char **_map;
+        std::vector<std::string> _map;
         int _rowCount;
         int _colCount;
         int _isFruit;
+        std::ifstream _file;
 };
 
 #endif /* !MAP_HPP_ */

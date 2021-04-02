@@ -5,21 +5,18 @@
 ## Makefile
 ##
 
-SRC			= 	main.cpp \
-				Map.cpp \
+SRC			=	Map.cpp \
 				Player.cpp \
-				Utils.cpp \
-				Score.cpp \
 
-CXXFLAGS 	=	-I./Utils -Wall -Wextra -g3 -O0
-NAME 		= 	Snake
+CXXFLAGS 	+=	-Wall -Wextra -I../../Utils -I../Interface -fPIC -g3
+NAME 		= 	../../lib/arcade_snake.so
 
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	g++ -o $(NAME) $(OBJ)
+	g++ -shared -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:
 	rm -f $(OBJ)

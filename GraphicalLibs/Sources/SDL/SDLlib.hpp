@@ -14,6 +14,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
 
+#include <ctime>
 #include <vector>
 #include <iostream>
 #include <map>

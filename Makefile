@@ -12,14 +12,14 @@ CXX				=	g++
 DIR1			=	./GraphicalLibs/Interface/
 DIR2			=	./Core/
 DIR3			=	./Games/Interface/
-DIR4			=	./GraphicalLibs/Sources/SDL/
-DIR5			=	./Utils/
+DIR4			=	./Utils/
 
-CALL_MAKE_GAMES	=	cd Games/Pacman && make
-CALL_MAKE_SDL	=	cd GraphicalLibs/Sources/SDL && make
-CALL_MAKE_SFML	=	cd GraphicalLibs/Sources/SFML && make
+CALL_MAKE_PACMAN	=	cd Games/Pacman && make
+CALL_MAKE_SNAKE		=	cd Games/Snake && make
+CALL_MAKE_SDL		=	cd GraphicalLibs/Sources/SDL && make
+CALL_MAKE_SFML		=	cd GraphicalLibs/Sources/SFML && make
 
-INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4) $(DIR5)
+INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4)
 INC_PARAMS		=	$(foreach d, $(INC), -I$d)
 
 CXXFLAGS		=	-Wall -Wextra $(INC_PARAMS) -ldl
@@ -35,7 +35,8 @@ RM				=	rm -rf
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CALL_MAKE_GAMES)
+	$(CALL_MAKE_PACMAN)
+	$(CALL_MAKE_SNAKE)
 	$(CALL_MAKE_SDL)
 	$(CALL_MAKE_SFML)
 	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
@@ -43,12 +44,14 @@ $(NAME): $(OBJ)
 clean:
 	$(RM) $(OBJ)
 	cd Games/Pacman && make clean
+	cd Games/Snake && make clean
 	cd GraphicalLibs/Sources/SDL && make clean
 	cd GraphicalLibs/Sources/SFML && make clean
 
 fclean: clean
 	$(RM) $(NAME)
 	cd Games/Pacman && make fclean
+	cd Games/Snake && make fclean
 	cd GraphicalLibs/Sources/SDL && make fclean
 	cd GraphicalLibs/Sources/SFML && make fclean
 

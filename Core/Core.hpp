@@ -11,6 +11,8 @@
 #include "DL.hpp"
 #include "IGame.hpp"
 #include "IGfx.hpp"
+#include <ctime>
+#include <cstring>
 
 class Core {
     public:
@@ -29,6 +31,17 @@ class Core {
         IGfx *_lib;
         DL _dlGame;
         DL _dlGfx;
+        std::vector<std::string> _libNames;
+        std::vector<std::string> _gameNames;
+        int _libIdx;
+        int _gameIdx;
+        Key _k;
+
+        void openGfx(const char *path);
+        void openGame(const char *path);
+        void changeGfxLib(const char *path);
+        void changeGameLib(const char *path);
+        void handleKeyPressed();
 };
 
 
