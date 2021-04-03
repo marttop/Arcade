@@ -58,7 +58,9 @@ bool Pacman::update()
 		prevTime = currTime;
 	}
 
-    return (true);
+    if (_input == K_SPACE)
+        return (true);
+    return (false);
 }
 
 std::vector<std::string> Pacman::getMap() const

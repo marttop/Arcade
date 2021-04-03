@@ -14,6 +14,7 @@ SFMLlib::SFMLlib()
 
 SFMLlib::~SFMLlib()
 {
+    _window.close();
 }
 
 bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
@@ -21,7 +22,6 @@ bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     (void)map;
 
     _window.create(sf::VideoMode(1920, 1080), "SFML");
-    _clock.restart();
 
     for (auto itr : tileMap) {
         _listText.push_back(new sf::Texture);
@@ -57,10 +57,8 @@ void SFMLlib::display(std::vector<std::string> map)
 Key SFMLlib::getKeyPressed()
 {
     while (_window.pollEvent(_event)) {
-        if (_event.type == sf::Event::Closed)  {
-            _window.close();
+        if (_event.type == sf::Event::Closed)
             return (K_EXIT);
-        }
         if (_event.type == sf::Event::KeyPressed) {
             if (_event.key.code == sf::Keyboard::Up)
                 return (K_UP);
@@ -70,25 +68,16 @@ Key SFMLlib::getKeyPressed()
                 return (K_LEFT);
             if (_event.key.code == sf::Keyboard::Right)
                 return (K_RIGHT);
-            if (_clock.getElapsedTime().asSeconds() >= 1) {
-                _clock.restart();
-                if (_event.key.code == sf::Keyboard::Num1) {
-                    _window.close();
-                    return (K_PREV_LIB);
-                }
-                if (_event.key.code == sf::Keyboard::Num2) {
-                    _window.close();
-                    return (K_NEXT_LIB);
-                }
-                if (_event.key.code == sf::Keyboard::Num3) {
-                    _window.close();
-                    return (K_PREV_GAME);
-                }
-                if (_event.key.code == sf::Keyboard::Num4) {
-                    _window.close();
-                    return (K_NEXT_GAME);
-                }
-            }
+            if (_event.key.code == sf::Keyboard::Num1)
+                return (K_PREV_LIB);
+            if (_event.key.code == sf::Keyboard::Num2)
+                return (K_NEXT_LIB);
+            if (_event.key.code == sf::Keyboard::Num3)
+                return (K_PREV_GAME);
+            if (_event.key.code == sf::Keyboard::Num4)
+                return (K_NEXT_GAME);
+            if (_event.key.code == sf::Keyboard::Space)
+                return (K_SPACE);
         }
     }
     return (NONE);

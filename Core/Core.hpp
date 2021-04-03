@@ -41,6 +41,7 @@ class Core {
         std::vector<std::string> _gameNames;
         int _libIdx;
         int _gameIdx;
+        int _saveGameIdx;
         Key _k;
         Scene _scene;
 

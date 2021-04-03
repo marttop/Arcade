@@ -14,6 +14,7 @@ Menu::Menu()
 
 Menu::~Menu()
 {
+    _file.close();
 }
 
 void Menu::init(const std::string &map)
@@ -23,6 +24,21 @@ void Menu::init(const std::string &map)
     if (!_file.is_open())
         throw std::invalid_argument("No 'menu.txt' found");
     this->readMap();
+
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Menu/config.txt");
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            _tileMap.insert(std::make_pair(
+                line[line.find('=') + 1],
+                line.substr(0, line.find('='))
+            ));
+        }
+        file.close();
+    }
+    _games = "@S";
+    _gamesIdx = 0;
 }
 
 void Menu::readMap()
@@ -33,28 +49,38 @@ void Menu::readMap()
     }
 }
 
+#include <fstream>
+
 bool Menu::update()
 {
-    return (true);
+    if (_input == K_PREV_GAME) {
+        for (size_t i = 0, j = 0; i < _map.size(); i++) {
+            if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
+                _gamesIdx--;
+                if (_gamesIdx < 0) _gamesIdx = (int)_games.size() - 1;
+                _map[i][j] = _games[_gamesIdx];
+                break;
+            }
+        }
+    }
+    else if (_input == K_NEXT_GAME) {
+        for (size_t i = 0, j = 0; i < _map.size(); i++) {
+            if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
+                _gamesIdx++;
+                if (_gamesIdx > (int)_games.size() - 1) _gamesIdx = 0;
+                _map[i][j] = _games[_gamesIdx];
+                break;
+            }
+        }
+    }
+    if (_input == K_SPACE)
+        return (true);
+    return (false);
 }
 
 std::map<char, std::string> Menu::getTiles() const
 {
-    std::map<char, std::string> tileMap;
-    std::ifstream file;
-    std::string line;
-    file.open("db/db_Menu/config.txt");
-    if (file.is_open()) {
-        while (getline(file, line)) {
-            tileMap.insert(std::make_pair(
-                line[line.find('=') + 1],
-                line.substr(0, line.find('='))
-            ));
-        }
-        file.close();
-    }
-
-    return (tileMap);
+    return (_tileMap);
 }
 
 std::vector<std::string> Menu::getMap() const

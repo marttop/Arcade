@@ -34,9 +34,6 @@ class SDLlib : public IGfx
         SDL_Window *_window;
         SDL_Renderer *_background;
 
-        unsigned int _currTime;
-        unsigned int _prevTime;
-
         std::map<char, std::string> _listText;
 };
 

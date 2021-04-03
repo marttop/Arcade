@@ -32,6 +32,9 @@ class Menu : public IGame {
         std::ifstream _file;
         std::vector<std::string> _map;
         size_t _score;
+        std::map<char, std::string> _tileMap;
+        std::string _games;
+        int _gamesIdx;
 
 };
 

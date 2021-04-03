@@ -13,14 +13,12 @@ SDLlib::SDLlib()
 
 SDLlib::~SDLlib()
 {
+    SDL_DestroyWindow(_window);
 }
 
 bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
 {
     (void)map;
-
-    this->_currTime = SDL_GetTicks();
-    this->_prevTime = this->_currTime;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cout << "error initializing SDL: " << SDL_GetError() << std::endl;
@@ -78,15 +76,11 @@ void SDLlib::display(std::vector<std::string> map)
 
 Key SDLlib::getKeyPressed()
 {
-    this->_currTime = SDL_GetTicks();
-
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            SDL_DestroyWindow(_window);
+        if (event.type == SDL_QUIT)
             return (K_EXIT);
-        }
         if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_LEFT)
                 return (K_LEFT);
@@ -96,25 +90,16 @@ Key SDLlib::getKeyPressed()
                 return (K_DOWN);
             if (event.key.keysym.sym == SDLK_UP)
                 return (K_UP);
-            if (this->_currTime - this->_prevTime >= 1000) {
-                if (event.key.keysym.sym == SDLK_1) {
-                    SDL_DestroyWindow(_window);
-                    return (K_PREV_LIB);
-                }
-                if (event.key.keysym.sym == SDLK_2) {
-                    SDL_DestroyWindow(_window);
-                    return (K_NEXT_LIB);
-                }
-                if (event.key.keysym.sym == SDLK_3) {
-                    SDL_DestroyWindow(_window);
-                    return (K_PREV_GAME);
-                }
-                if (event.key.keysym.sym == SDLK_4) {
-                    SDL_DestroyWindow(_window);
-                    return (K_NEXT_GAME);
-                }
-                this->_prevTime = this->_currTime;
-            }
+            if (event.key.keysym.sym == SDLK_1)
+                return (K_PREV_LIB);
+            if (event.key.keysym.sym == SDLK_2)
+                return (K_NEXT_LIB);
+            if (event.key.keysym.sym == SDLK_3)
+                return (K_PREV_GAME);
+            if (event.key.keysym.sym == SDLK_4)
+                return (K_NEXT_GAME);
+            if (event.key.keysym.sym == SDLK_SPACE)
+                return (K_SPACE);
         }
     }
 

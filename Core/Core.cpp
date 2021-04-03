@@ -28,6 +28,7 @@ Core::Core(char *lib)
             break;
         _gameIdx++;
     }
+    _saveGameIdx = _gameIdx;
 }
 
 Core::~Core()
@@ -96,25 +97,33 @@ void Core::handleKeyPressed()
         _libIdx--;
         if (_libIdx < 0) _libIdx = _libNames.size() - 1;
         this->changeGfxLib(_libNames[_libIdx].c_str());
-        this->_k = NONE;
     }
     else if (this->_k == K_NEXT_LIB) {
         _libIdx++;
         if (_libIdx > (int)_libNames.size() - 1) _libIdx = 0;
         this->changeGfxLib(_libNames[_libIdx].c_str());
-        this->_k = NONE;
     }
-    else if (this->_k == K_PREV_GAME) {
-        _gameIdx--;
-        if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
-        this->changeGameLib(_gameNames[_gameIdx].c_str());
-        this->_k = NONE;
+    if (this->_scene == GAME) {
+        if (this->_k == K_PREV_GAME) {
+            _gameIdx--;
+            if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
+            this->changeGameLib(_gameNames[_gameIdx].c_str());
+        }
+        else if (this->_k == K_NEXT_GAME) {
+            _gameIdx++;
+            if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
+            this->changeGameLib(_gameNames[_gameIdx].c_str());
+        }
     }
-    else if (this->_k == K_NEXT_GAME) {
-        _gameIdx++;
-        if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
-        this->changeGameLib(_gameNames[_gameIdx].c_str());
-        this->_k = NONE;
+    else if (this->_scene == MENU) {
+        if (this->_k == K_PREV_GAME) {
+            _gameIdx--;
+            if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
+        }
+        else if (this->_k == K_NEXT_GAME) {
+            _gameIdx++;
+            if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
+        }
     }
 }
 
@@ -123,7 +132,17 @@ void Core::run()
     while ((this->_k = this->_lib->getKeyPressed()) != K_EXIT) {
         this->handleKeyPressed();
         this->_game->setKeyPressed(this->_k);
-        this->_game->update();
+        if (this->_game->update()) {
+            if (_scene == GAME) {
+                _scene = MENU;
+                _gameIdx = _saveGameIdx;
+                this->changeGameLib("lib/arcade_menu.so");
+            }
+            else {
+                _scene = GAME;
+                this->changeGameLib(_gameNames[_gameIdx].c_str());
+            }
+        }
         this->_lib->display(this->_game->getMap());
     }
 }

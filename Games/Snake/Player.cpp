@@ -81,7 +81,9 @@ bool Player::update()
         cBuf = NONE;
     }
 
-    return (true);
+    if (_input == K_SPACE)
+        return (true);
+    return (false);
 }
 
 void Player::setKeyPressed(Key k)
