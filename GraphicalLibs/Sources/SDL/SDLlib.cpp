@@ -20,6 +20,8 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
 {
     (void)map;
 
+    SDL_StartTextInput();
+
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         std::cout << "error initializing SDL: " << SDL_GetError() << std::endl;
         return false;
@@ -95,7 +97,10 @@ Key SDLlib::getKeyPressed()
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT)
             return (K_EXIT);
-        if (event.type == SDL_KEYDOWN) {
+        else if (event.type == SDL_TEXTINPUT) {
+            return ((Key)event.text.text[0]);
+        }
+        else if (event.type == SDL_KEYDOWN) {
             if (event.key.keysym.sym == SDLK_LEFT)
                 return (K_LEFT);
             if (event.key.keysym.sym == SDLK_RIGHT)
@@ -114,9 +119,10 @@ Key SDLlib::getKeyPressed()
                 return (K_NEXT_GAME);
             if (event.key.keysym.sym == SDLK_SPACE)
                 return (K_SPACE);
+            if (event.key.keysym.sym == SDLK_BACKSPACE)
+                return (K_DEL);
         }
     }
-
     return (NONE);
 }
 
