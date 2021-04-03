@@ -113,11 +113,11 @@ void Core::handleKeyPressed()
         }
     }
     else if (this->_scene == MENU) {
-        if (this->_k == K_PREV_GAME) {
+        if (this->_k == K_LEFT) {
             _gameIdx--;
             if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
         }
-        else if (this->_k == K_NEXT_GAME) {
+        else if (this->_k == K_RIGHT) {
             _gameIdx++;
             if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
         }
