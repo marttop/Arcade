@@ -61,6 +61,10 @@ Key SFMLlib::getKeyPressed()
     while (_window.pollEvent(_event)) {
         if (_event.type == sf::Event::Closed)
             return (K_EXIT);
+        if (_event.type == sf::Event::TextEntered) {
+            if (_event.text.unicode < 128)
+                return ((Key)_event.text.unicode);
+        }
         if (_event.type == sf::Event::KeyPressed) {
             if (_event.key.code == sf::Keyboard::Up)
                 return (K_UP);
@@ -80,6 +84,8 @@ Key SFMLlib::getKeyPressed()
                 return (K_NEXT_GAME);
             if (_event.key.code == sf::Keyboard::Space)
                 return (K_SPACE);
+            if (_event.key.code == sf::Keyboard::Backspace)
+                return (K_DEL);
         }
     }
     return (NONE);

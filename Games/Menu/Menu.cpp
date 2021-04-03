@@ -10,11 +10,56 @@
 Menu::Menu()
 {
     _score = 0;
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Pacman/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestPacman = std::atoi(line.c_str());
+    file.close();
+    file.open("db/db_Snake/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestSnake = std::atoi(line.c_str());
+    file.close();
+    getNameFromFile();
 }
 
 Menu::~Menu()
 {
     _file.close();
+    setNameToFile();
+}
+
+size_t Menu::getBestScore() const
+{
+    if (this->_games[_gamesIdx] == '@')
+        return (this->_bestPacman);
+    else
+        return (this->_bestSnake);
+}
+
+void Menu::getNameFromFile()
+{
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Menu/name.txt");
+    if (file.is_open()) {
+        getline(file, line);
+        this->_name = line;
+        file.close();
+    }
+}
+
+void Menu::setNameToFile()
+{
+    std::ofstream file;
+    file.open("db/db_Menu/name.txt");
+    if (file.is_open()) {
+        file.clear();
+        file << this->_name;
+    }
+    file.close();
 }
 
 void Menu::init(const std::string &map)
@@ -49,8 +94,6 @@ void Menu::readMap()
     }
 }
 
-#include <fstream>
-
 bool Menu::update()
 {
     if (_input == K_LEFT) {
@@ -80,7 +123,7 @@ bool Menu::update()
 
 std::string Menu::getName() const
 {
-    return ("");
+    return (this->_name);
 }
 
 std::map<char, std::string> Menu::getTiles() const
@@ -101,6 +144,12 @@ size_t Menu::getScore() const
 void Menu::setKeyPressed(Key k)
 {
     this->_input = k;
+    if (isalpha(k)) {
+        this->_name = this->_name + (char)k;
+    }
+    else if (k == K_DEL) {
+        this->_name = this->_name.substr(0, this->_name.size() - 1);
+    }
 }
 
 extern "C" IGame *createGame()

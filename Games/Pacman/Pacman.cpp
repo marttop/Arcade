@@ -15,10 +15,12 @@ Pacman::Pacman()
     this->_name = "player";
     this->_timer = false;
     this->_end = false;
+    this->getScoreFromFile();
 }
 
 Pacman::~Pacman()
 {
+    this->setScoreToFile();
 }
 
 void Pacman::init(const std::string &map)
@@ -179,6 +181,34 @@ std::map<char, std::string> Pacman::getTiles() const
     }
 
     return (tileMap);
+}
+
+void Pacman::getScoreFromFile()
+{
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Pacman/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestScore = std::atoi(line.c_str());
+}
+
+void Pacman::setScoreToFile()
+{
+    if (this->m.getScore() > (int)this->_bestScore) {
+        std::ofstream file;
+        file.open("db/db_Pacman/score.txt");
+        if (file.is_open()) {
+            file.clear();
+            file << std::to_string(this->m.getScore());
+        }
+        file.close();
+    }
+}
+
+size_t Pacman::getBestScore() const
+{
+    return (_bestScore);
 }
 
 std::string Pacman::getName() const
