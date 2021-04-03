@@ -46,7 +46,7 @@ void SFMLlib::display(std::vector<std::string> map)
         for (size_t j = 0; j < map[i].size(); j++) {
             c = map[i][j];
             if (_tileMap[c]) {
-                _tileMap[c]->setPosition(sf::Vector2f(j * _tileMap[c]->getTextureRect().width, i * _tileMap[c]->getTextureRect().height));
+                _tileMap[c]->setPosition(sf::Vector2f(j * 32, i * 32));
                 _window.draw(*_tileMap[c]);
             }
         }

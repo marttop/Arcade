@@ -53,7 +53,7 @@ void Menu::readMap()
 
 bool Menu::update()
 {
-    if (_input == K_PREV_GAME) {
+    if (_input == K_LEFT) {
         for (size_t i = 0, j = 0; i < _map.size(); i++) {
             if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
                 _gamesIdx--;
@@ -63,7 +63,7 @@ bool Menu::update()
             }
         }
     }
-    else if (_input == K_NEXT_GAME) {
+    else if (_input == K_RIGHT) {
         for (size_t i = 0, j = 0; i < _map.size(); i++) {
             if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
                 _gamesIdx++;

@@ -17,16 +17,13 @@ Core::Core(char *lib)
     this->_lib->init("", this->_game->getTiles());
     this->parseLibs();
     _scene = MENU;
+    this->_libIdx = 0;
+    this->_gameIdx = 0;
 
     for (size_t i = 0; i != _libNames.size(); i++) {
         if (strcmp(_libNames[i].c_str(), lib) == 0)
             break;
         _libIdx++;
-    }
-    for (size_t i = 0; i != _gameNames.size(); i++) {
-        if (strcmp(_gameNames[i].c_str(), "lib/arcade_pacman.so") == 0)
-            break;
-        _gameIdx++;
     }
     _saveGameIdx = _gameIdx;
 }

@@ -1,4 +1,7 @@
-db/assets/pacman.png=@
-db/assets/gum.png=G
-db/assets/wall.png=#
-db/assets/background.png=A
+db/assets/pacman_menu.png=@
+db/assets/snake_menu.png=S
+db/assets/chose_your_game.png=G
+db/assets/menu_border.png=#
+db/assets/arcade.png=A
+db/assets/menu_desc.png=M
+db/assets/menu_desc2.png=N

@@ -67,6 +67,14 @@ void SDLlib::display(std::vector<std::string> map)
 
             SDL_Texture *texture = nullptr;
             texture = IMG_LoadTexture(this->_background, _listText[c].c_str());
+            SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
+            SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+
+            if (dst.w == 32 && dst.h == 32) {
+                dst.w = 25;
+                dst.h = 25;
+            }
+
             SDL_RenderCopy(_background, texture, &src, &dst);
             SDL_DestroyTexture(texture);
         }
