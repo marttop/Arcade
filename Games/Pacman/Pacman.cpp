@@ -46,13 +46,13 @@ void Pacman::createGhosts()
 
 bool Pacman::update()
 {
-    static clock_t currTime = 0;
-    static clock_t prevTime = 0;
-    currTime = std::clock();
+    static std::chrono::_V2::system_clock::time_point currTime = my_clock::now();
+    static std::chrono::_V2::system_clock::time_point prevTime = my_clock::now();
+    currTime = my_clock::now();
 
 	if (this->_input != NONE)
 		this->_p->setDir(this->_input);
-	if (currTime - prevTime >= 100000) {
+	if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 70000) {
 		this->_p->move();
         this->moveGhosts();
 		prevTime = currTime;

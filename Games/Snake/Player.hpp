@@ -15,6 +15,10 @@
 #include "Map.hpp"
 #include "Key.hpp"
 #include "IGame.hpp"
+#include <chrono>
+
+using my_clock = std::chrono::high_resolution_clock;
+
 
 class Map;
 

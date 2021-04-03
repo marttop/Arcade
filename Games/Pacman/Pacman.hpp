@@ -11,6 +11,10 @@
 #include "Player.hpp"
 #include "Ghost.hpp"
 #include "IGame.hpp"
+#include <chrono>
+
+
+using my_clock = std::chrono::high_resolution_clock;
 
 class Pacman : public IGame {
     public:

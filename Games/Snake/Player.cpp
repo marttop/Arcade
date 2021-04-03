@@ -53,10 +53,10 @@ void Player::init(const std::string &map)
 
 bool Player::update()
 {
-    static clock_t currTime = 0;
-    static clock_t prevTime = 0;
+    static std::chrono::_V2::system_clock::time_point currTime = my_clock::now();
+    static std::chrono::_V2::system_clock::time_point prevTime = my_clock::now();
+    currTime = my_clock::now();
     static char cBuf = NONE;
-    currTime = std::clock();
 
     if (this->drawSnake())
         exit(0);
@@ -67,7 +67,7 @@ bool Player::update()
         else if (_snake.begin()->first == K_RIGHT && this->_input == K_LEFT) this->_input = K_RIGHT;
         cBuf = this->_input;
     }
-    if (currTime - prevTime >= 100000) {
+    if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 70000) {
         if (cBuf != NONE) _snake.begin()->first = cBuf;
         _snakeEnd = _snake.back();
         std::pair<int, std::pair<int, int>> snakeHead = std::make_pair(_snake.begin()->first, std::make_pair(_snake.begin()->second.first, _snake.begin()->second.second));
