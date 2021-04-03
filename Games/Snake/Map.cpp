@@ -72,7 +72,7 @@ void Map::spawnFruit(void)
         while (1) {
             int x = std::rand() % (_colCount - 2) + 1;
             int y = std::rand() % (_rowCount - 2) + 1;
-            if (_map[y][x] != 'S') {
+            if (_map[y][x] != 'S' && _map[y][x] != '#') {
                 _map[y][x] = 'F';
                 break;
             }
