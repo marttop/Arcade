@@ -9,7 +9,7 @@ SRC			=	Map.cpp \
 				Player.cpp \
 
 CXXFLAGS 	+=	-Wall -Wextra -I../../Utils -I../Interface -fPIC -g3
-NAME 		= 	../../lib/arcade_snake.so
+NAME 		= 	../../lib/arcade_nibbler.so
 
 OBJ = $(SRC:.cpp=.o)
 

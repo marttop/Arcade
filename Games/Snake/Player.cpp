@@ -16,7 +16,6 @@ Player::Player()
     for (int i = 0; i < 3; i++)
         _snake.push_back(std::make_pair(K_UP, std::make_pair(_x, _y + i)));
     _score = 0;
-    this->_name = "player";
     this->getScoreFromFile();
 }
 
@@ -77,6 +76,14 @@ int Player::drawSnake(void)
 void Player::init(const std::string &map)
 {
     (void)map;
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Menu/name.txt");
+    if (file.is_open()) {
+        getline(file, line);
+        this->_name = line;
+        file.close();
+    }
 }
 
 bool Player::update()

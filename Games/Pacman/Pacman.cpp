@@ -12,7 +12,6 @@ Pacman::Pacman()
     std::srand(std::time(0));
     this->_p = new Player(&this->m);
     this->createGhosts();
-    this->_name = "player";
     this->_timer = false;
     this->_end = false;
     this->getScoreFromFile();
@@ -26,6 +25,14 @@ Pacman::~Pacman()
 void Pacman::init(const std::string &map)
 {
     (void)map;
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Menu/name.txt");
+    if (file.is_open()) {
+        getline(file, line);
+        this->_name = line;
+        file.close();
+    }
 }
 
 void Pacman::moveGhosts()

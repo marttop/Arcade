@@ -19,6 +19,8 @@ Map::Map()
 
 Map::~Map()
 {
+    if (_file.is_open())
+        _file.close();
 }
 
 void Map::clearMap()
@@ -30,6 +32,8 @@ void Map::clearMap()
 
 void Map::setFileFromPath(std::string path)
 {
+    if (_file.is_open())
+        _file.close();
     _file.open(path);
     if (!_file.is_open())
         throw std::invalid_argument("No file found");
