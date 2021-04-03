@@ -143,8 +143,8 @@ void Core::run()
         this->_lib->clear();
         this->_lib->draw(this->_game->getMap());
         if (this->_scene == GAME) {
-            this->_lib->drawText(910, 45, "name: " + this->_game->getName());
-            this->_lib->drawText(910, 10, "score: " + std::to_string(this->_game->getScore()));
+            this->_lib->drawText(38 * this->_game->getMap().size(), 45, "name: " + this->_game->getName());
+            this->_lib->drawText(38 * this->_game->getMap().size(), 10, "score: " + std::to_string(this->_game->getScore()));
         }
         if (this->_scene == MENU) {
             this->_lib->drawText(620, 280, "Best: " + std::to_string(this->_game->getBestScore()));
