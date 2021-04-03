@@ -34,6 +34,7 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
         SDL_RENDERER_ACCELERATED
     );
 
+    this->_texture = nullptr;
     _listText = tileMap;
 
     _background = SDL_CreateRenderer(_window, -1, 0);
@@ -43,7 +44,12 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     return true;
 }
 
-void SDLlib::display(std::vector<std::string> map)
+void SDLlib::display()
+{
+    SDL_RenderPresent(this->_background);
+}
+
+void SDLlib::draw(std::vector<std::string> map)
 {
     SDL_Rect dst;
     SDL_Rect src;
@@ -56,30 +62,26 @@ void SDLlib::display(std::vector<std::string> map)
     dst.h = 25;
     dst.w = 25;
 
-    SDL_RenderClear(this->_background);
-
     for (size_t i = 0; i < map.size(); i++) {
         for (size_t j = 0; j < map[i].size(); j++) {
             c = map[i][j];
 
             dst.x = j * 25;
             dst.y = i * 25;
-
-            SDL_Texture *texture = nullptr;
-            texture = IMG_LoadTexture(this->_background, _listText[c].c_str());
-            SDL_QueryTexture(texture, NULL, NULL, &dst.w, &dst.h);
-            SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+            this->_texture = nullptr;
+            this->_texture = IMG_LoadTexture(this->_background, _listText[c].c_str());
+            SDL_QueryTexture(this->_texture, NULL, NULL, &dst.w, &dst.h);
+            SDL_QueryTexture(this->_texture, NULL, NULL, &src.w, &src.h);
 
             if (dst.w == 32 && dst.h == 32) {
                 dst.w = 25;
                 dst.h = 25;
             }
 
-            SDL_RenderCopy(_background, texture, &src, &dst);
-            SDL_DestroyTexture(texture);
+            SDL_RenderCopy(_background, this->_texture, &src, &dst);
+            SDL_DestroyTexture(this->_texture);
         }
     }
-    SDL_RenderPresent(this->_background);
 }
 
 Key SDLlib::getKeyPressed()
@@ -119,6 +121,11 @@ void SDLlib::drawText(size_t x, size_t y, std::string text)
     (void)x;
     (void)y;
     (void)text;
+}
+
+void SDLlib::clear()
+{
+    SDL_RenderClear(this->_background);
 }
 
 extern "C" IGfx *createGFX()

@@ -32,6 +32,7 @@ class Player : public IGame {
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);
+        std::string getName() const;
         std::map<char, std::string> getTiles() const;
 
     protected:
@@ -45,6 +46,7 @@ class Player : public IGame {
         size_t _score;
         Map *_map;
         Key _input;
+        std::string _name;
         std::pair<int, std::pair<int, int>> _snakeEnd;
         std::vector<std::pair<int, std::pair<int, int>>> _snake;
 };

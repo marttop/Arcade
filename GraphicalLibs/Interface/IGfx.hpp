@@ -19,7 +19,10 @@ class IGfx {
         virtual bool init(const std::string &map, std::map<char, std::string>) = 0;
         virtual Key getKeyPressed() = 0;
         virtual void drawText(size_t x, size_t y, std::string text) = 0;
-        virtual void display(std::vector<std::string>) = 0;
+
+        virtual void draw(std::vector<std::string>) = 0;
+        virtual void display() = 0;
+        virtual void clear() = 0;
 };
 
 #endif

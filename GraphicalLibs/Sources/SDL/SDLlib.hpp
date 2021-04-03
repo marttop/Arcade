@@ -26,14 +26,16 @@ class SDLlib : public IGfx
         ~SDLlib();
 
         bool init(const std::string &map, std::map<char, std::string>);
-        void display(std::vector<std::string>);
         Key getKeyPressed();
         void drawText(size_t x, size_t y, std::string text);
+        void draw(std::vector<std::string>);
+        void clear();
+        void display();
 
     private:
         SDL_Window *_window;
         SDL_Renderer *_background;
-
+        SDL_Texture *_texture;
         std::map<char, std::string> _listText;
 };
 

@@ -21,9 +21,11 @@ class SFMLlib : public IGfx {
         ~SFMLlib();
 
         bool init(const std::string &map, std::map<char, std::string>);
-        void display(std::vector<std::string>);
         Key getKeyPressed();
         void drawText(size_t x, size_t y, std::string text);
+        void clear();
+        void display();
+        void draw(std::vector<std::string>);
 
     protected:
     private:

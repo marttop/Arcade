@@ -27,11 +27,14 @@ class Pacman : public IGame {
         size_t getScore() const;
         void setKeyPressed(Key k);
         std::map<char, std::string> getTiles() const;
+        std::string getName() const;
 
     protected:
     private:
         void createGhosts();
         void moveGhosts();
+
+        std::string _name;
         Key _input;
         Player *_p;
         std::vector<Ghost *> g;

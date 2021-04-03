@@ -78,6 +78,11 @@ bool Menu::update()
     return (false);
 }
 
+std::string Menu::getName() const
+{
+    return ("");
+}
+
 std::map<char, std::string> Menu::getTiles() const
 {
     return (_tileMap);

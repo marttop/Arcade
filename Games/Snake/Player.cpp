@@ -16,6 +16,7 @@ Player::Player()
     for (int i = 0; i < 3; i++)
         _snake.push_back(std::make_pair(K_UP, std::make_pair(_x, _y + i)));
     _score = 0;
+    this->_name = "player";
 }
 
 Player::~Player()
@@ -118,6 +119,11 @@ std::map<char, std::string> Player::getTiles() const
     }
 
     return (tileMap);
+}
+
+std::string Player::getName() const
+{
+    return (_name);
 }
 
 extern "C" IGame *createGame()

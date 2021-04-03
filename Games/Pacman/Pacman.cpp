@@ -12,6 +12,7 @@ Pacman::Pacman()
     std::srand(std::time(0));
     this->_p = new Player(&this->m);
     this->createGhosts();
+    this->_name = "player";
 }
 
 Pacman::~Pacman()
@@ -95,6 +96,11 @@ std::map<char, std::string> Pacman::getTiles() const
     }
 
     return (tileMap);
+}
+
+std::string Pacman::getName() const
+{
+    return (this->_name);
 }
 
 extern "C" IGame *createGame()

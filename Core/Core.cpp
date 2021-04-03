@@ -140,6 +140,12 @@ void Core::run()
                 this->changeGameLib(_gameNames[_gameIdx].c_str());
             }
         }
-        this->_lib->display(this->_game->getMap());
+        this->_lib->clear();
+        this->_lib->draw(this->_game->getMap());
+        if (this->_scene == GAME) {
+            this->_lib->drawText(910, 45, "name: " + this->_game->getName());
+            this->_lib->drawText(910, 10, "score: " + std::to_string(this->_game->getScore()));
+        }
+        this->_lib->display();
     }
 }

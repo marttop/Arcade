@@ -24,6 +24,7 @@ class Menu : public IGame {
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);
+        std::string getName() const;
         void readMap();
 
     protected:

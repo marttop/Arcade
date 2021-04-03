@@ -36,11 +36,14 @@ bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     return (true);
 }
 
-void SFMLlib::display(std::vector<std::string> map)
+void SFMLlib::display()
+{
+    _window.display();
+}
+
+void SFMLlib::draw(std::vector<std::string> map)
 {
     char c;
-
-    _window.clear();
 
     for (size_t i = 0; i < map.size(); i++) {
         for (size_t j = 0; j < map[i].size(); j++) {
@@ -51,7 +54,6 @@ void SFMLlib::display(std::vector<std::string> map)
             }
         }
     }
-    _window.display();
 }
 
 Key SFMLlib::getKeyPressed()
@@ -88,6 +90,11 @@ void SFMLlib::drawText(size_t x, size_t y, std::string text)
     _text.setString(text);
     _text.setPosition(sf::Vector2f{(float)x, (float)y});
     _window.draw(_text);
+}
+
+void SFMLlib::clear()
+{
+    _window.clear();
 }
 
 extern "C" IGfx *createGFX()
