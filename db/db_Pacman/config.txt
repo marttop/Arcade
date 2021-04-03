@@ -1,3 +1,6 @@
 db/assets/pacman.png=@
-db/assets/gum.png=G
+db/assets/ghost.png=G
+db/assets/ghostWeak.png=w
+db/assets/point.png=.
+db/assets/gum.png=P
 db/assets/wall.png=#

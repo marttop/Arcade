@@ -34,6 +34,18 @@ class Pacman : public IGame {
         void createGhosts();
         void moveGhosts();
 
+        void setWeakGhost();
+        void setStrongGhost();
+        Ghost *findGhost(size_t x, size_t y) const;
+        void overGhost();
+        bool underGhost();
+
+        void endGame();
+
+        bool _timer;
+
+        bool _end;
+
         std::string _name;
         Key _input;
         Player *_p;

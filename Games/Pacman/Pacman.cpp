@@ -13,6 +13,8 @@ Pacman::Pacman()
     this->_p = new Player(&this->m);
     this->createGhosts();
     this->_name = "player";
+    this->_timer = false;
+    this->_end = false;
 }
 
 Pacman::~Pacman()
@@ -45,22 +47,103 @@ void Pacman::createGhosts()
     }
 }
 
+Ghost *Pacman::findGhost(size_t x, size_t y) const
+{
+    for (Ghost *ghost : this->g) {
+        if (ghost->getPosX() == x && ghost->getPosY() == y) {
+            return ghost;
+        }
+    }
+    return NULL;
+}
+
+void Pacman::setWeakGhost()
+{
+    for (Ghost *ghost : this->g) {
+        ghost->setCar('w');
+    }
+}
+
+void Pacman::setStrongGhost()
+{
+    for (Ghost *ghost : this->g) {
+        ghost->setCar('G');
+    }
+}
+
+void Pacman::overGhost()
+{
+    if (_p->getOnCar() == 'w') {
+        Ghost *gogo = findGhost(_p->getPosX(), _p->getPosY());
+        if (gogo) {
+            gogo->setPos(13, 10);
+            gogo->setOn(' ');
+            gogo->setStart(1);
+            gogo->setDir(K_UP);
+        }
+    }
+}
+
+bool Pacman::underGhost()
+{
+    for (Ghost *ghost : this->g) {
+        if (ghost->getOnCar() == '@') {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Pacman::endGame()
+{
+    m.clearMap();
+    m.setFileFromPath("db/db_Pacman/end.txt");
+    m._readMap();
+}
+
 bool Pacman::update()
 {
     static std::chrono::_V2::system_clock::time_point currTime = my_clock::now();
     static std::chrono::_V2::system_clock::time_point prevTime = my_clock::now();
+    static std::chrono::_V2::system_clock::time_point prevTimeBonus = my_clock::now();
     currTime = my_clock::now();
 
-	if (this->_input != NONE)
-		this->_p->setDir(this->_input);
-	if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 70000) {
-		this->_p->move();
-        this->moveGhosts();
-		prevTime = currTime;
-	}
+    if (_end == false) {
+        if (this->_p->getPowerFull() && _timer == false) {
+            setWeakGhost();
+            prevTimeBonus = currTime;
+            _timer = true;
+        }
 
-    if (_input == K_SPACE)
-        return (true);
+        if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTimeBonus).count() >= 5000000 && _timer) {
+            setStrongGhost();
+            _timer = false;
+            this->_p->setPowerFull(0);
+        }
+
+        if (this->_input != NONE)
+            this->_p->setDir(this->_input);
+        if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 70000) {
+            this->_p->move();
+            overGhost();
+            this->moveGhosts();
+            if (underGhost()) {
+                endGame();
+                sleep(2);
+                currTime = my_clock::now();
+                _end = true;
+            }
+            prevTime = currTime;
+        }
+
+        if (_input == K_SPACE)
+            return (true);
+        return (false);
+    } else {
+        if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 2000000) {
+            return true;
+        }
+    }
     return (false);
 }
 

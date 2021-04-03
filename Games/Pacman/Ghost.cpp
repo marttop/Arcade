@@ -33,6 +33,11 @@ void Ghost::moveGhost()
     }
 }
 
+void Ghost::setStart(size_t i)
+{
+    start = i;
+}
+
 Ghost::~Ghost()
 {
 }

@@ -15,6 +15,7 @@ class Ghost : public Entity {
         Ghost(Map *map, int x, int y);
         ~Ghost();
         void moveGhost();
+        void setStart(size_t i);
     protected:
     private:
         int start;

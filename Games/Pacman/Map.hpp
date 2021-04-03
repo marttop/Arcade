@@ -23,11 +23,14 @@ class Map {
         void printMap() const;
         void setScore(int score);
         int getScore() const;
+        
+        void setFileFromPath(std::string file);
+        void _readMap();
+        void clearMap();
 
         std::vector<std::string> map;
     protected:
     private:
-        void _readMap();
         std::ifstream _file;
         int _score;
 };

@@ -40,7 +40,19 @@ class Entity {
         void moveLeft();
         void moveRight();
         void move();
+
+        size_t getPosX() const;
+        size_t getPosY() const;
+
+        char getOnCar() const;
+
+        void setPos(size_t x, size_t y);
+        void setOn(char c);
         void setDir(Key dir);
+        void setCar(char c);
+        void setPowerFull(int power);
+
+        int getPowerFull() const;
     protected:
         Map *_map;
         std::size_t _x;
@@ -51,6 +63,7 @@ class Entity {
         EntityType _type;
         char _carac;
         char _on;
+        int _powerFull;
         void _getPos();
 };
 

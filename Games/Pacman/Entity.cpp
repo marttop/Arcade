@@ -19,6 +19,7 @@ Entity::Entity(EntityType type, Map *map)
         this->_carac = 'G';
     this->_dir = NONE;
     this->_on = ' ';
+    this->_powerFull = 0;
 }
 
 void Entity::_getPos()
@@ -37,6 +38,47 @@ void Entity::_getPos()
 
 Entity::~Entity()
 {
+}
+
+size_t Entity::getPosX() const
+{
+    return _x;
+}
+
+size_t Entity::getPosY() const
+{
+    return _y;
+}
+
+char Entity::getOnCar() const
+{
+    return _on;
+}
+
+int Entity::getPowerFull() const
+{
+    return _powerFull;
+}
+
+void Entity::setPos(size_t x, size_t y)
+{
+    _x = x;
+    _y = y;
+}
+
+void Entity::setOn(char c)
+{
+    _on = c;
+}
+
+void Entity::setCar(char c)
+{
+    _carac = c;
+}
+
+void Entity::setPowerFull(int power)
+{
+    _powerFull = power;
 }
 
 void Entity::setDir(Key dir)
@@ -82,15 +124,24 @@ void Entity::move()
 void Entity::moveUp()
 {
     if (this->_y > 0) {
-        if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ') && this->_type == PLAYER) {
+        if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ' || this->_map->map[_y - 1][_x] == 'P'|| this->_map->map[_y - 1][_x] == 'w') && this->_type == PLAYER) {
             if (this->_map->map[_y - 1][_x] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
+            if (this->_map->map[_y - 1][_x] == 'P')
+                this->_powerFull = 1;
+
+            if (this->_map->map[_y - 1][_x] != 'w')
+                this->_on = ' ';
+            else {
+                this->_on = 'w';
+            }
+
             this->_map->map[_y - 1][_x] = this->_carac;
             this->_map->map[_y][_x] = ' ';
-            this->_on = ' ';
+
             this->_y -= 1;
         }
-        else if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ') && this->_type == GHOST) {
+        else if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ' || this->_map->map[_y - 1][_x] == 'P' || (this->_map->map[_y - 1][_x] == '@' && _carac == 'G')) && this->_type == GHOST) {
             this->_map->map[_y][_x] = this->_on;
             this->_on = this->_map->map[_y - 1][_x];
             this->_map->map[_y - 1][_x] = this->_carac;
@@ -104,15 +155,24 @@ void Entity::moveUp()
 void Entity::moveDown()
 {
     if (this->_y < this->_map->map.size() - 1) {
-        if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ') && this->_type == PLAYER) {
+        if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ' || this->_map->map[_y + 1][_x] == 'P' || this->_map->map[_y + 1][_x] == 'w') && this->_type == PLAYER) {
             if (this->_map->map[_y + 1][_x] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
+            if (this->_map->map[_y + 1][_x] == 'P')
+                this->_powerFull = 1;
+            
+            if (this->_map->map[_y + 1][_x] != 'w')
+                this->_on = ' ';
+            else {
+                this->_on = 'w';
+            }
+
             this->_map->map[_y + 1][_x] = this->_carac;
             this->_map->map[_y][_x] = ' ';
-            this->_on = ' ';
+
             this->_y += 1;
         }
-        else if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ') && this->_type == GHOST) {
+        else if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ' || this->_map->map[_y + 1][_x] == 'P' || (this->_map->map[_y + 1][_x] == '@' && _carac == 'G')) && this->_type == GHOST) {
             this->_map->map[_y][_x] = this->_on;
             this->_on = this->_map->map[_y + 1][_x];
             this->_map->map[_y + 1][_x] = this->_carac;
@@ -126,15 +186,24 @@ void Entity::moveDown()
 void Entity::moveLeft()
 {
     if (this->_x > 0) {
-        if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ') && this->_type == PLAYER) {
+        if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ' || this->_map->map[_y][_x - 1] == 'P' || this->_map->map[_y][_x - 1] == 'w') && this->_type == PLAYER) {
             if (this->_map->map[_y][_x - 1] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
+            if (this->_map->map[_y][_x - 1] == 'P')
+                this->_powerFull = 1;
+
+            if (this->_map->map[_y][_x - 1] != 'w')
+                this->_on = ' ';
+            else {
+                this->_on = 'w';
+            }
+
             this->_map->map[_y][_x - 1] = this->_carac;
             this->_map->map[_y][_x] = ' ';
-            this->_on = ' ';
+
             this->_x -= 1;
         }
-        else if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ') && this->_type == GHOST) {
+        else if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ' || this->_map->map[_y][_x - 1] == 'P' || (this->_map->map[_y][_x - 1] == '@' && _carac == 'G')) && this->_type == GHOST) {
             this->_map->map[_y][_x] = this->_on;
             this->_on = this->_map->map[_y][_x - 1];
             this->_map->map[_y][_x - 1] = this->_carac;
@@ -154,15 +223,24 @@ void Entity::moveLeft()
 void Entity::moveRight()
 {
     if (this->_x < this->_map->map[_y].size() - 1) {
-        if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ') && this->_type == PLAYER) {
+        if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ' || this->_map->map[_y][_x + 1] == 'P' || this->_map->map[_y][_x + 1] == 'w') && this->_type == PLAYER) {
             if (this->_map->map[_y][_x + 1] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
+            if (this->_map->map[_y][_x + 1] == 'P')
+                this->_powerFull = 1;
+
+            if (this->_map->map[_y][_x + 1] != 'w')
+                this->_on = ' ';
+            else {
+                this->_on = 'w';
+            }
+
             this->_map->map[_y][_x + 1] = this->_carac;
             this->_map->map[_y][_x] = ' ';
-            this->_on = ' ';
+
             this->_x += 1;
         }
-        else if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ') && this->_type == GHOST) {
+        else if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ' || this->_map->map[_y][_x + 1] == 'P' || (this->_map->map[_y][_x + 1] == '@' && _carac == 'G')) && this->_type == GHOST) {
             this->_map->map[_y][_x] = this->_on;
             this->_on = this->_map->map[_y][_x + 1];
             this->_map->map[_y][_x + 1] = this->_carac;

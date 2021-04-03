@@ -21,6 +21,20 @@ Map::~Map()
 {
 }
 
+void Map::clearMap()
+{
+    while (map.size() != 0) {
+        map.pop_back();
+    }
+}
+
+void Map::setFileFromPath(std::string path)
+{
+    _file.open(path);
+    if (!_file.is_open())
+        throw std::invalid_argument("No file found");
+}
+
 void Map::_readMap()
 {
     std::string line;
