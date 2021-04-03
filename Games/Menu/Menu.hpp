@@ -30,6 +30,8 @@ class Menu : public IGame {
 
     protected:
     private:
+        void getNameFromFile();
+        void setNameToFile();
         Key _input;
         std::ifstream _file;
         std::vector<std::string> _map;
@@ -38,6 +40,7 @@ class Menu : public IGame {
         std::string _games;
         int _gamesIdx;
 
+        std::string _name;
         size_t _bestPacman;
         size_t _bestSnake;
 

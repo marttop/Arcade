@@ -127,8 +127,10 @@ void Core::handleKeyPressed()
 void Core::run()
 {
     while ((this->_k = this->_lib->getKeyPressed()) != K_EXIT) {
+
         this->handleKeyPressed();
         this->_game->setKeyPressed(this->_k);
+
         if (this->_game->update()) {
             if (_scene == GAME) {
                 _scene = MENU;
@@ -140,23 +142,28 @@ void Core::run()
                 this->changeGameLib(_gameNames[_gameIdx].c_str());
             }
         }
+
         this->_lib->clear();
         this->_lib->draw(this->_game->getMap());
+
         if (this->_scene == GAME) {
             this->_lib->drawText(38 * this->_game->getMap().size(), 45, "name: " + this->_game->getName());
             this->_lib->drawText(38 * this->_game->getMap().size(), 10, "score: " + std::to_string(this->_game->getScore()));
         }
         if (this->_scene == MENU) {
             this->_lib->drawText(620, 280, "Best: " + std::to_string(this->_game->getBestScore()));
+            this->_lib->drawText(620, 420, this->_game->getName());
         }
+
         this->_lib->display();
     }
+
     destroyGame *dGame = (destroyGame *)this->_dlGame.sym("destroyGame");
-    if (_game != nullptr) dGame(_game);
-    _game = nullptr;
-    this->_dlGame.close();
     destroyGFX *dGfx = (destroyGFX *)this->_dlGfx.sym("destroyGFX");
+    if (_game != nullptr) dGame(_game);
     if (_lib != nullptr) dGfx(_lib);
+    _game = nullptr;
     _lib = nullptr;
+    this->_dlGame.close();
     this->_dlGfx.close();
 }

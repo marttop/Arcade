@@ -21,6 +21,7 @@ typedef enum Key
     K_NEXT_GAME,
     K_PREV_LIB,
     K_NEXT_LIB,
+    K_DEL,
     NONE,
 } Key;
 
