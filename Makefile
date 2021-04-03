@@ -16,6 +16,7 @@ DIR4			=	./Utils/
 
 CALL_MAKE_PACMAN	=	cd Games/Pacman && make
 CALL_MAKE_SNAKE		=	cd Games/Snake && make
+CALL_MAKE_MENU		=	cd Games/Menu && make
 CALL_MAKE_SDL		=	cd GraphicalLibs/Sources/SDL && make
 CALL_MAKE_SFML		=	cd GraphicalLibs/Sources/SFML && make
 
@@ -34,7 +35,20 @@ RM				=	rm -rf
 
 all: $(NAME)
 
+core: $(OBJ)
+	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
+
+games:
+	$(CALL_MAKE_PACMAN)
+	$(CALL_MAKE_SNAKE)
+	$(CALL_MAKE_MENU)
+
+graphicals:
+	$(CALL_MAKE_SDL)
+	$(CALL_MAKE_SFML)
+
 $(NAME): $(OBJ)
+	$(CALL_MAKE_MENU)
 	$(CALL_MAKE_PACMAN)
 	$(CALL_MAKE_SNAKE)
 	$(CALL_MAKE_SDL)
@@ -45,6 +59,7 @@ clean:
 	$(RM) $(OBJ)
 	cd Games/Pacman && make clean
 	cd Games/Snake && make clean
+	cd Games/Menu && make clean
 	cd GraphicalLibs/Sources/SDL && make clean
 	cd GraphicalLibs/Sources/SFML && make clean
 
@@ -52,6 +67,7 @@ fclean: clean
 	$(RM) $(NAME)
 	cd Games/Pacman && make fclean
 	cd Games/Snake && make fclean
+	cd Games/Menu && make fclean
 	cd GraphicalLibs/Sources/SDL && make fclean
 	cd GraphicalLibs/Sources/SFML && make fclean
 

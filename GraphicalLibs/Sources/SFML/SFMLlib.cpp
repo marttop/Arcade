@@ -30,6 +30,9 @@ bool SFMLlib::init(const std::string &map, std::map<char, std::string> tileMap)
         _tileMap[itr.first]->setTexture(*_listText.back());
     }
 
+    _font.loadFromFile("db/fonts/Cornerstone.ttf");
+    _text.setFont(_font);
+
     return (true);
 }
 
@@ -91,12 +94,11 @@ Key SFMLlib::getKeyPressed()
     return (NONE);
 }
 
-
 void SFMLlib::drawText(size_t x, size_t y, std::string text)
 {
-    (void)x;
-    (void)y;
-    (void)text;
+    _text.setString(text);
+    _text.setPosition(sf::Vector2f{(float)x, (float)y});
+    _window.draw(_text);
 }
 
 extern "C" IGfx *createGFX()

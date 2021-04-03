@@ -44,7 +44,7 @@ void Pacman::createGhosts()
     }
 }
 
-void Pacman::update()
+bool Pacman::update()
 {
     static clock_t currTime = 0;
     static clock_t prevTime = 0;
@@ -57,6 +57,8 @@ void Pacman::update()
         this->moveGhosts();
 		prevTime = currTime;
 	}
+
+    return (true);
 }
 
 std::vector<std::string> Pacman::getMap() const

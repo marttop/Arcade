@@ -1,0 +1,4 @@
+db/assets/pacman.png=@
+db/assets/gum.png=G
+db/assets/wall.png=#
+db/assets/background.png=A

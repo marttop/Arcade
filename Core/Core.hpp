@@ -21,6 +21,11 @@ class Core {
         ~Core();
         void run();
 
+        enum Scene {
+            MENU,
+            GAME,
+        };
+
     protected:
     private:
         typedef IGame *createGame();
@@ -37,6 +42,7 @@ class Core {
         int _libIdx;
         int _gameIdx;
         Key _k;
+        Scene _scene;
 
         void openGfx(const char *path);
         void openGame(const char *path);

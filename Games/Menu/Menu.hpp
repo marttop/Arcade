@@ -2,36 +2,37 @@
 ** EPITECH PROJECT, 2021
 ** B-OOP-400-NCE-4-1-arcade-marton.szuts
 ** File description:
-** Pacman
+** Menu
 */
 
-#ifndef PACMAN_HPP_
-#define PACMAN_HPP_
+#ifndef MENU_HPP_
+#define MENU_HPP_
 
-#include "Player.hpp"
-#include "Ghost.hpp"
 #include "IGame.hpp"
+#include "Key.hpp"
+#include <fstream>
+#include <unistd.h>
 
-class Pacman : public IGame {
+class Menu : public IGame {
     public:
-        Pacman();
-        ~Pacman();
+        Menu();
+        ~Menu();
 
         void init(const std::string &map);
         bool update();
+        std::map<char, std::string> getTiles() const;
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);
-        std::map<char, std::string> getTiles() const;
+        void readMap();
 
     protected:
     private:
-        void createGhosts();
-        void moveGhosts();
         Key _input;
-        Player *_p;
-        std::vector<Ghost *> g;
-        Map m;
+        std::ifstream _file;
+        std::vector<std::string> _map;
+        size_t _score;
+
 };
 
-#endif /* !PACMAN_HPP_ */
+#endif /* !MENU_HPP_ */

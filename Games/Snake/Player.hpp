@@ -24,7 +24,7 @@ class Player : public IGame {
         ~Player();
 
         void init(const std::string &map);
-        void update();
+        bool update();
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);

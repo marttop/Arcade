@@ -51,7 +51,7 @@ void Player::init(const std::string &map)
     (void)map;
 }
 
-void Player::update()
+bool Player::update()
 {
     static clock_t currTime = 0;
     static clock_t prevTime = 0;
@@ -80,6 +80,8 @@ void Player::update()
         prevTime = currTime;
         cBuf = NONE;
     }
+
+    return (true);
 }
 
 void Player::setKeyPressed(Key k)

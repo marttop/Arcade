@@ -12,17 +12,22 @@ Core::Core(char *lib)
     this->_lib = nullptr;
     this->_game = nullptr;
     this->openGfx(lib);
-    this->openGame((char *)"lib/arcade_pacman.so");
+    this->openGame((char *)"lib/arcade_menu.so");
     this->_game->init("");
     this->_lib->init("", this->_game->getTiles());
     this->parseLibs();
-    _libIdx = 0;
+    _scene = MENU;
+
     for (size_t i = 0; i != _libNames.size(); i++) {
         if (strcmp(_libNames[i].c_str(), lib) == 0)
             break;
         _libIdx++;
     }
-    _gameIdx = 0;
+    for (size_t i = 0; i != _gameNames.size(); i++) {
+        if (strcmp(_gameNames[i].c_str(), "lib/arcade_pacman.so") == 0)
+            break;
+        _gameIdx++;
+    }
 }
 
 Core::~Core()
@@ -63,6 +68,7 @@ void Core::changeGfxLib(const char *path)
 {
     destroyGFX *dGfx = (destroyGFX *)this->_dlGfx.sym("destroyGFX");
     if (_lib != nullptr) dGfx(_lib);
+    _lib = nullptr;
     this->_dlGfx.close();
     this->openGfx(path);
     this->_lib->init("", this->_game->getTiles());
@@ -72,9 +78,16 @@ void Core::changeGameLib(const char *path)
 {
     destroyGame *dGame = (destroyGame *)this->_dlGame.sym("destroyGame");
     if (_game != nullptr) dGame(_game);
+    _game = nullptr;
     this->_dlGame.close();
+    destroyGFX *dGfx = (destroyGFX *)this->_dlGfx.sym("destroyGFX");
+    if (_lib != nullptr) dGfx(_lib);
+    _lib = nullptr;
+    this->_dlGfx.close();
+    this->openGfx(_libNames[_libIdx].c_str());
     this->openGame(path);
     this->_game->init("");
+    this->_lib->init("", this->_game->getTiles());
 }
 
 void Core::handleKeyPressed()
@@ -95,16 +108,12 @@ void Core::handleKeyPressed()
         _gameIdx--;
         if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
         this->changeGameLib(_gameNames[_gameIdx].c_str());
-        this->_game->init("");
-        this->_lib->init("", this->_game->getTiles());
         this->_k = NONE;
     }
     else if (this->_k == K_NEXT_GAME) {
         _gameIdx++;
         if (_gameIdx > (int)_gameNames.size() - 1) _gameIdx = 0;
         this->changeGameLib(_gameNames[_gameIdx].c_str());
-        this->_game->init("");
-        this->_lib->init("", this->_game->getTiles());
         this->_k = NONE;
     }
 }

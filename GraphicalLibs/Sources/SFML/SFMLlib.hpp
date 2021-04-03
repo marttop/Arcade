@@ -32,6 +32,8 @@ class SFMLlib : public IGfx {
         std::vector<sf::Texture *> _listText;
         std::map<char, sf::Sprite *> _tileMap;
         sf::Clock _clock;
+        sf::Font _font;
+        sf::Text _text;
 
 };
 

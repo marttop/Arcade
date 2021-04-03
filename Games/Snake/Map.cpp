@@ -44,8 +44,6 @@ void Map::clearMap(void)
 
 int Map::setSnake(int x, int y)
 {
-    std::cout << "x: " << x << " y: " << y << std::endl;
-    if (x == 0 || y == 0) return (0);
     if (_map[y][x] == 'S' || _map[y][x] == '#')
         return (1);
     else if (_map[y][x] == 'F') {
