@@ -34,13 +34,17 @@ class Player : public IGame {
         void setKeyPressed(Key k);
         std::string getName() const;
         std::map<char, std::string> getTiles() const;
+        size_t getBestScore() const;
 
     protected:
     private:
         void growSnake(void);
         int moveSnake(char c);
         int drawSnake(void);
+        void getScoreFromFile();
+        void setScoreToFile();
 
+        size_t _bestScore;
         int _x;
         int _y;
         size_t _score;

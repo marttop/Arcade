@@ -22,18 +22,22 @@ class Pacman : public IGame {
         ~Pacman();
 
         void init(const std::string &map);
-        bool update();
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);
         std::map<char, std::string> getTiles() const;
+        size_t getBestScore() const;
         std::string getName() const;
 
     protected:
     private:
         void createGhosts();
         void moveGhosts();
+        bool update();
+        void getScoreFromFile();
+        void setScoreToFile();
 
+        size_t _bestScore;
         std::string _name;
         Key _input;
         Player *_p;

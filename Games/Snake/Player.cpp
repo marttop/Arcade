@@ -17,11 +17,38 @@ Player::Player()
         _snake.push_back(std::make_pair(K_UP, std::make_pair(_x, _y + i)));
     _score = 0;
     this->_name = "player";
+    this->getScoreFromFile();
 }
 
 Player::~Player()
 {
     delete _map;
+    this->setScoreToFile();
+}
+
+void Player::getScoreFromFile()
+{
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Snake/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestScore = std::atoi(line.c_str());
+}
+
+void Player::setScoreToFile()
+{
+    if (this->_score > this->_bestScore) {
+        std::ofstream file;
+        file.open("db/db_Snake/score.txt");
+        if (file.is_open())
+            file << std::to_string(this->_score);
+    }
+}
+
+size_t Player::getBestScore() const
+{
+    return (_bestScore);
 }
 
 void Player::growSnake(void)
@@ -59,8 +86,10 @@ bool Player::update()
     currTime = my_clock::now();
     static char cBuf = NONE;
 
-    if (this->drawSnake())
+    if (this->drawSnake()) {
+        this->setScoreToFile();
         exit(0);
+    }
     if ((this->_input == K_UP || this->_input == K_LEFT || this->_input == K_RIGHT || this->_input == K_DOWN) && _snake.size() > 0) {
         if (_snake.begin()->first == K_UP && this->_input == K_DOWN) this->_input = K_UP;
         else if (_snake.begin()->first == K_DOWN && this->_input == K_UP) this->_input = K_DOWN;

@@ -25,6 +25,7 @@ class Menu : public IGame {
         size_t getScore() const;
         void setKeyPressed(Key k);
         std::string getName() const;
+        size_t getBestScore() const;
         void readMap();
 
     protected:
@@ -36,6 +37,9 @@ class Menu : public IGame {
         std::map<char, std::string> _tileMap;
         std::string _games;
         int _gamesIdx;
+
+        size_t _bestPacman;
+        size_t _bestSnake;
 
 };
 

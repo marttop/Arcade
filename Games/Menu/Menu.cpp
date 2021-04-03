@@ -10,11 +10,31 @@
 Menu::Menu()
 {
     _score = 0;
+    std::ifstream file;
+    std::string line;
+    file.open("db/db_Pacman/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestPacman = std::atoi(line.c_str());
+    file.close();
+    file.open("db/db_Snake/score.txt");
+    if (file.is_open())
+        getline(file, line);
+    this->_bestSnake = std::atoi(line.c_str());
+    file.close();
 }
 
 Menu::~Menu()
 {
     _file.close();
+}
+
+size_t Menu::getBestScore() const
+{
+    if (this->_games[_gamesIdx] == '@')
+        return (this->_bestPacman);
+    else
+        return (this->_bestSnake);
 }
 
 void Menu::init(const std::string &map)
@@ -48,8 +68,6 @@ void Menu::readMap()
         this->_map.push_back(line);
     }
 }
-
-#include <fstream>
 
 bool Menu::update()
 {
