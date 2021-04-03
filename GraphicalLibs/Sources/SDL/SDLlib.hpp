@@ -13,6 +13,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <ctime>
 #include <vector>
@@ -36,6 +37,9 @@ class SDLlib : public IGfx
         SDL_Window *_window;
         SDL_Renderer *_background;
         SDL_Texture *_texture;
+
+        TTF_Font *police;
+
         std::map<char, std::string> _listText;
 };
 
