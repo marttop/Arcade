@@ -37,6 +37,10 @@ bool SDLlib::init(const std::string &map, std::map<char, std::string> tileMap)
     this->_texture = nullptr;
     _listText = tileMap;
 
+    TTF_Init();
+
+    police = TTF_OpenFont("db/fonts/Cornerstone.ttf", 65);
+
     _background = SDL_CreateRenderer(_window, -1, 0);
     SDL_RenderClear(_background);
     SDL_RenderPresent(_background);
@@ -121,11 +125,25 @@ void SDLlib::drawText(size_t x, size_t y, std::string text)
     (void)x;
     (void)y;
     (void)text;
+    SDL_Color White = {255, 255, 255, 255};
+    SDL_Surface* surfaceMessage = TTF_RenderText_Solid(police, text.c_str(), White);
+    SDL_Texture* Message = SDL_CreateTextureFromSurface(_background, surfaceMessage);
+
+    SDL_Rect Message_rect;
+    Message_rect.x = x - x * 0.20;
+    Message_rect.y = y - y * 0.20;
+    Message_rect.w = 300;
+    Message_rect.h = 30;
+
+    SDL_RenderCopy(_background, Message, NULL, &Message_rect);
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(Message);
 }
 
 void SDLlib::clear()
 {
     SDL_RenderClear(this->_background);
+
 }
 
 extern "C" IGfx *createGFX()
