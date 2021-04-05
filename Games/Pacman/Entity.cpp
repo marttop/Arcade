@@ -124,7 +124,7 @@ void Entity::move()
 void Entity::moveUp()
 {
     if (this->_y > 0) {
-        if ((this->_map->map[_y - 1][_x] == '.' || this->_map->map[_y - 1][_x] == ' ' || this->_map->map[_y - 1][_x] == 'P'|| this->_map->map[_y - 1][_x] == 'w') && this->_type == PLAYER) {
+        if ((this->_map->map[_y - 1][_x] != '#') && this->_type == PLAYER) {
             if (this->_map->map[_y - 1][_x] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
             if (this->_map->map[_y - 1][_x] == 'P')
@@ -155,7 +155,7 @@ void Entity::moveUp()
 void Entity::moveDown()
 {
     if (this->_y < this->_map->map.size() - 1) {
-        if ((this->_map->map[_y + 1][_x] == '.' || this->_map->map[_y + 1][_x] == ' ' || this->_map->map[_y + 1][_x] == 'P' || this->_map->map[_y + 1][_x] == 'w') && this->_type == PLAYER) {
+        if ((this->_map->map[_y + 1][_x] != '#') && this->_type == PLAYER) {
             if (this->_map->map[_y + 1][_x] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
             if (this->_map->map[_y + 1][_x] == 'P')
@@ -186,7 +186,7 @@ void Entity::moveDown()
 void Entity::moveLeft()
 {
     if (this->_x > 0) {
-        if ((this->_map->map[_y][_x - 1] == '.' || this->_map->map[_y][_x - 1] == ' ' || this->_map->map[_y][_x - 1] == 'P' || this->_map->map[_y][_x - 1] == 'w') && this->_type == PLAYER) {
+        if ((this->_map->map[_y][_x - 1] != '#') && this->_type == PLAYER) {
             if (this->_map->map[_y][_x - 1] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
             if (this->_map->map[_y][_x - 1] == 'P')
@@ -223,7 +223,7 @@ void Entity::moveLeft()
 void Entity::moveRight()
 {
     if (this->_x < this->_map->map[_y].size() - 1) {
-        if ((this->_map->map[_y][_x + 1] == '.' || this->_map->map[_y][_x + 1] == ' ' || this->_map->map[_y][_x + 1] == 'P' || this->_map->map[_y][_x + 1] == 'w') && this->_type == PLAYER) {
+        if ((this->_map->map[_y][_x + 1] != '#') && this->_type == PLAYER) {
             if (this->_map->map[_y][_x + 1] == '.')
                 this->_map->setScore(this->_map->getScore() + 1);
             if (this->_map->map[_y][_x + 1] == 'P')

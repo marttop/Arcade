@@ -13,7 +13,9 @@ Pacman::Pacman()
     this->_p = new Player(&this->m);
     this->createGhosts();
     this->_timer = false;
+    this->_win = false;
     this->_end = false;
+    this->_combo = 0;
     this->getScoreFromFile();
 }
 
@@ -89,6 +91,8 @@ void Pacman::overGhost()
             gogo->setStart(1);
             gogo->setDir(K_UP);
         }
+        m.setScore(m.getScore() + (200 * pow(2, _combo)));
+        _combo += 1;
     }
 }
 
@@ -102,10 +106,27 @@ bool Pacman::underGhost()
     return false;
 }
 
+bool Pacman::noMorePoint()
+{
+    for (std::string line : m.map) {
+        for (int i = 0; line[i] != '\0'; i++) {
+            if (line[i] == '.') {
+                return false;
+            }           
+        }
+    }
+    _win = true;
+    return true;
+}
+
 void Pacman::endGame()
 {
     m.clearMap();
-    m.setFileFromPath("db/db_Pacman/end.txt");
+    if (_win) {
+        m.setFileFromPath("db/db_Pacman/win.txt");
+    } else {
+        m.setFileFromPath("db/db_Pacman/lose.txt");
+    }
     m._readMap();
 }
 
@@ -126,6 +147,7 @@ bool Pacman::update()
         if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTimeBonus).count() >= 5000000 && _timer) {
             setStrongGhost();
             _timer = false;
+            _combo = 0;
             this->_p->setPowerFull(0);
         }
 
@@ -135,7 +157,7 @@ bool Pacman::update()
             this->_p->move();
             overGhost();
             this->moveGhosts();
-            if (underGhost()) {
+            if (underGhost() || noMorePoint()) {
                 endGame();
                 sleep(2);
                 currTime = my_clock::now();

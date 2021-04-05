@@ -12,6 +12,7 @@
 #include "Ghost.hpp"
 #include "IGame.hpp"
 #include <chrono>
+#include <math.h>
 
 
 using my_clock = std::chrono::high_resolution_clock;
@@ -42,12 +43,16 @@ class Pacman : public IGame {
         Ghost *findGhost(size_t x, size_t y) const;
         void overGhost();
         bool underGhost();
+        bool noMorePoint();
 
         void endGame();
 
         bool _timer;
 
         bool _end;
+        bool _win;
+
+        int _combo;
 
         size_t _bestScore;
         std::string _name;
