@@ -16,7 +16,7 @@
 class IGame {
     public:
         virtual ~IGame(){};
-        virtual void init(const std::string &map) = 0;
+        virtual void init() = 0;
         virtual bool update() = 0;
 
         virtual std::map<char, std::string> getTiles() const = 0;

@@ -21,7 +21,7 @@ class Pacman : public IGame {
         Pacman();
         ~Pacman();
 
-        void init(const std::string &map);
+        void init();
         std::vector<std::string> getMap() const;
         size_t getScore() const;
         void setKeyPressed(Key k);

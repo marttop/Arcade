@@ -18,7 +18,7 @@ class Menu : public IGame {
         Menu();
         ~Menu();
 
-        void init(const std::string &map);
+        void init();
         bool update();
         std::map<char, std::string> getTiles() const;
         std::vector<std::string> getMap() const;

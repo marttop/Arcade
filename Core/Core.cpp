@@ -13,7 +13,7 @@ Core::Core(char *lib)
     this->_game = nullptr;
     this->openGfx(lib);
     this->openGame((char *)"lib/arcade_menu.so");
-    this->_game->init("");
+    this->_game->init();
     this->_lib->init("", this->_game->getTiles());
     this->parseLibs();
     _scene = MENU;
@@ -84,7 +84,7 @@ void Core::changeGameLib(const char *path)
     this->_dlGfx.close();
     this->openGfx(_libNames[_libIdx].c_str());
     this->openGame(path);
-    this->_game->init("");
+    this->_game->init();
     this->_lib->init("", this->_game->getTiles());
 }
 

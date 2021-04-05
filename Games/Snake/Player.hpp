@@ -27,7 +27,7 @@ class Player : public IGame {
         Player();
         ~Player();
 
-        void init(const std::string &map);
+        void init();
         bool update();
         std::vector<std::string> getMap() const;
         size_t getScore() const;

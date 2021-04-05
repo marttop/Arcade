@@ -62,9 +62,8 @@ void Menu::setNameToFile()
     file.close();
 }
 
-void Menu::init(const std::string &map)
+void Menu::init()
 {
-    (void)map;
     _file.open("db/db_Menu/menu.txt");
     if (!_file.is_open())
         throw std::invalid_argument("No 'menu.txt' found");

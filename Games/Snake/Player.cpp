@@ -73,9 +73,8 @@ int Player::drawSnake(void)
     return (0);
 }
 
-void Player::init(const std::string &map)
+void Player::init()
 {
-    (void)map;
     std::ifstream file;
     std::string line;
     file.open("db/db_Menu/name.txt");

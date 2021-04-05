@@ -22,9 +22,8 @@ Pacman::~Pacman()
     this->setScoreToFile();
 }
 
-void Pacman::init(const std::string &map)
+void Pacman::init()
 {
-    (void)map;
     std::ifstream file;
     std::string line;
     file.open("db/db_Menu/name.txt");
