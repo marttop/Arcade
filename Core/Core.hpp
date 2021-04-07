@@ -14,6 +14,10 @@
 #include <ctime>
 #include <cstring>
 #include <fstream>
+#include <chrono>
+#include <time.h>
+
+using my_clock = std::chrono::high_resolution_clock;
 
 class Core {
     public:
