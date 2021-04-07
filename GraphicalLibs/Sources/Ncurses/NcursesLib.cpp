@@ -68,7 +68,38 @@ Key NcursesLib::getKeyPressed()
 
 void NcursesLib::drawText(size_t x, size_t y, std::string text, size_t size)
 {
-
+    wmove(_window, 0, 0);
+    (void)size;
+    //HARD DICK
+    if (x == 615) {
+        y = 4;
+        x = 25;
+    }
+    if (x == 650) {
+        y = 1;
+        x = 25;
+    }
+    if (x == 200) {
+        y = 4;
+        x = 3;
+    }
+    if (x == 493) {
+        y = 13;
+        x = 3;
+    }
+    if (x == 490) {
+        y = 14;
+        x = 4;
+    }
+    if (x == 620 && y == 420) {
+        y = 9;
+        x = 22;
+    }
+    if (x == 620 && y == 280) {
+        y = 7;
+        x = 22;
+    }
+    mvwprintw(_window, y, x, text.c_str());
 }
 
 void NcursesLib::draw(std::vector<std::string> map)
