@@ -29,11 +29,13 @@ class Map {
         std::vector<std::string> getMap() const;
         void setChar(int x, int y, char part);
         size_t getScore() const;
+        void freeMap();
+        void readMap();
+        void setFileFromPath(std::string path);
 
     protected:
     private:
         void spawnFruit(std::string snakeParts);
-        void readMap();
 
         std::vector<std::string> _map;
         int _rowCount;

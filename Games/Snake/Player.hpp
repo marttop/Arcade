@@ -51,6 +51,7 @@ class Player : public IGame {
         std::string getName() const;
         std::map<char, std::string> getTiles() const;
         size_t getBestScore() const;
+        void endGame();
 
     protected:
     private:
@@ -69,6 +70,9 @@ class Player : public IGame {
         std::pair<int, std::pair<int, int>> _snakeEnd;
         std::vector<std::pair<int, std::pair<int, int>>> _snake;
         std::string _snakeParts;
+        int _lost;
+        std::chrono::_V2::system_clock::time_point _currLostClock;
+        std::chrono::_V2::system_clock::time_point _prevLostClock;
 };
 
 #endif /* !PLAYER_HPP_ */

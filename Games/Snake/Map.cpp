@@ -31,12 +31,28 @@ Map::~Map()
 {
 }
 
+void Map::freeMap()
+{
+    while (_map.size() != 0) {
+        _map.pop_back();
+    }
+}
+
 void Map::readMap()
 {
     std::string line;
     while (getline(this->_file, line)) {
         this->_map.push_back(line);
     }
+}
+
+void Map::setFileFromPath(std::string path)
+{
+    if (_file.is_open())
+        _file.close();
+    _file.open(path);
+    if (!_file.is_open())
+        throw std::invalid_argument("No file found");
 }
 
 void Map::clearMap(std::string snakeParts)

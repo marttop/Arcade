@@ -17,6 +17,9 @@ Player::Player()
     for (int i = 0; i < 3; i++)
         _snake.push_back(std::make_pair(K_UP, std::make_pair(_x, _y + i)));
     this->getScoreFromFile();
+    _lost = 0;
+    _prevLostClock = my_clock::now();
+    _currLostClock = my_clock::now();
 }
 
 Player::~Player()
@@ -55,8 +58,18 @@ void Player::growSnake(void)
     _snake.push_back(_snakeEnd);
 }
 
+void Player::endGame()
+{
+    _lost = 1;
+    _prevLostClock = my_clock::now();
+    _map->freeMap();
+    _map->setFileFromPath("db/db_Snake/lose.txt");
+    _map->readMap();
+}
+
 int Player::drawSnake(void)
 {
+    if (_lost == 1) return (1);
     int ret = 0;
     int grow = 0;
     int index = 0;
@@ -107,7 +120,12 @@ int Player::drawSnake(void)
                     ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[TAIL_RIGHT], _snakeParts);
             }
         }
-        if (ret == 1) return (1);
+        if (ret == 1) {
+            endGame();
+            this->setScoreToFile();
+            sleep(0.5);
+            return (1);
+        }
         if (ret == 2) grow = 1;
     }
     if (grow == 1)
@@ -135,8 +153,9 @@ bool Player::update()
     static char cBuf = NONE;
 
     if (this->drawSnake()) {
-        this->setScoreToFile();
-        exit(0);
+        if (std::chrono::duration_cast<std::chrono::microseconds>(_currLostClock - _prevLostClock).count() > 20000000)
+            return (true);
+        else return (true);
     }
     if ((this->_input == K_UP || this->_input == K_LEFT || this->_input == K_RIGHT || this->_input == K_DOWN) && _snake.size() > 0) {
         if (_snake.begin()->first == K_UP && this->_input == K_DOWN) this->_input = K_UP;
