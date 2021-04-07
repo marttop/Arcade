@@ -29,6 +29,7 @@ bool NcursesLib::init(const std::string &map, std::map<char, std::string>)
     return (true);
 }
 
+#include <iostream>
 Key NcursesLib::getKeyPressed()
 {
     int c = getch();
@@ -43,13 +44,21 @@ Key NcursesLib::getKeyPressed()
         return (K_LEFT);
     if (c == KEY_RIGHT)
         return (K_RIGHT);
-    if (c == 38)
+    // if (c == 38)
+    //     return (K_PREV_LIB);
+    // if (c == 169)
+    //     return (K_NEXT_LIB);
+    // if (c == 34)
+    //     return (K_PREV_GAME);
+    // if (c == 39)
+    //     return (K_NEXT_GAME);
+    if (c == 49)
         return (K_PREV_LIB);
-    if (c == 169)
+    if (c == 50)
         return (K_NEXT_LIB);
-    if (c == 34)
+    if (c == 51)
         return (K_PREV_GAME);
-    if (c == 39)
+    if (c == 52)
         return (K_NEXT_GAME);
     if (c == ' ')
         return (K_SPACE);
@@ -68,7 +77,6 @@ void NcursesLib::drawText(size_t x, size_t y, std::string text, size_t size)
 {
     wmove(_window, 0, 0);
     (void)size;
-    //HARD DICK
     if (x == 745) {
         y = 4;
         x = 25;

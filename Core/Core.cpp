@@ -93,7 +93,7 @@ void Core::handleKeyPressed()
     static std::chrono::_V2::system_clock::time_point currTime = my_clock::now();
     static std::chrono::_V2::system_clock::time_point prevTime = my_clock::now();
     currTime = my_clock::now();
-    if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 100000) {
+    if (std::chrono::duration_cast<std::chrono::microseconds>(currTime - prevTime).count() >= 250000) {
         if (this->_k == K_PREV_LIB) {
             _libIdx--;
             if (_libIdx < 0) _libIdx = _libNames.size() - 1;

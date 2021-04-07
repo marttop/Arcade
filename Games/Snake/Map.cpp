@@ -21,9 +21,9 @@ Map::Map(std::string snakeParts)
     _isFruit = 0;
     _fruits = "FO";
     _fruitValue = 0;
-    spawnFruit(snakeParts);
     _file.close();
     _wallParts = "#";
+    spawnFruit(snakeParts);
     _score = 0;
 }
 
