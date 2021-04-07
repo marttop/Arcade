@@ -121,7 +121,7 @@ void Core::handleKeyPressed()
             }
         }
     }
-    else if (this->_scene == MENU) {
+    if (this->_scene == MENU) {
         if (this->_k == K_LEFT) {
             _gameIdx--;
             if (_gameIdx < 0) _gameIdx = _gameNames.size() - 1;
