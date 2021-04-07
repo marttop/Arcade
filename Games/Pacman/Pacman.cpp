@@ -112,7 +112,7 @@ bool Pacman::noMorePoint()
         for (int i = 0; line[i] != '\0'; i++) {
             if (line[i] == '.') {
                 return false;
-            }           
+            }
         }
     }
     _win = true;
