@@ -123,7 +123,7 @@ int Player::drawSnake(void)
         if (ret == 1) {
             endGame();
             this->setScoreToFile();
-            sleep(0.5);
+            usleep(500000);
             return (1);
         }
         if (ret == 2) grow = 1;
@@ -153,9 +153,9 @@ bool Player::update()
     static char cBuf = NONE;
 
     if (this->drawSnake()) {
-        if (std::chrono::duration_cast<std::chrono::microseconds>(_currLostClock - _prevLostClock).count() > 20000000)
-            return (true);
-        else return (true);
+        _currLostClock = my_clock::now();
+        if (std::chrono::duration_cast<std::chrono::microseconds>(_currLostClock - _prevLostClock).count() > 2000000) return (true);
+        else return (false);
     }
     if ((this->_input == K_UP || this->_input == K_LEFT || this->_input == K_RIGHT || this->_input == K_DOWN) && _snake.size() > 0) {
         if (_snake.begin()->first == K_UP && this->_input == K_DOWN) this->_input = K_UP;

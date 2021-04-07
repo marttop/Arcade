@@ -159,7 +159,7 @@ bool Pacman::update()
             this->moveGhosts();
             if (underGhost() || noMorePoint()) {
                 endGame();
-                sleep(0.5);
+                usleep(500000);
                 currTime = my_clock::now();
                 _end = true;
             }
