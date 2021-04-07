@@ -14,7 +14,9 @@ NcursesLib::NcursesLib()
 
 NcursesLib::~NcursesLib()
 {
-
+    this->clear();
+    delwin(_window);
+    printf("\e[1;1H\e[2J");
 }
 
 bool NcursesLib::init(const std::string &map, std::map<char, std::string>)
@@ -28,8 +30,6 @@ bool NcursesLib::init(const std::string &map, std::map<char, std::string>)
     keypad(stdscr, true);
     _window = newwin(1080, 1920, 0, 0);
 }
-
-#include <iostream>
 
 Key NcursesLib::getKeyPressed()
 {
@@ -71,31 +71,31 @@ void NcursesLib::drawText(size_t x, size_t y, std::string text, size_t size)
     wmove(_window, 0, 0);
     (void)size;
     //HARD DICK
-    if (x == 615) {
+    if (x == 745) {
         y = 4;
         x = 25;
     }
-    if (x == 650) {
+    if (x == 780) {
         y = 1;
         x = 25;
     }
-    if (x == 200) {
+    if (x == 330) {
         y = 4;
         x = 3;
     }
-    if (x == 493) {
+    if (x == 623) {
         y = 13;
         x = 3;
     }
-    if (x == 490) {
+    if (x == 620) {
         y = 14;
         x = 4;
     }
-    if (x == 620 && y == 420) {
+    if (x == 750 && y == 420) {
         y = 9;
         x = 22;
     }
-    if (x == 620 && y == 280) {
+    if (x == 750 && y == 280) {
         y = 7;
         x = 22;
     }
