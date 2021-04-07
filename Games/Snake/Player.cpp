@@ -10,12 +10,12 @@
 
 Player::Player()
 {
-    _map = new Map;
+    _snakeParts = "ABCDULQWERPMNZ";
+    _map = new Map(_snakeParts);
     _x = _map->getColCount() / 2;
     _y = _map->getRowCount() / 2;
     for (int i = 0; i < 3; i++)
         _snake.push_back(std::make_pair(K_UP, std::make_pair(_x, _y + i)));
-    _score = 0;
     this->getScoreFromFile();
 }
 
@@ -37,11 +37,11 @@ void Player::getScoreFromFile()
 
 void Player::setScoreToFile()
 {
-    if (this->_score > this->_bestScore) {
+    if (_map->getScore() > this->_bestScore) {
         std::ofstream file;
         file.open("db/db_Snake/score.txt");
         if (file.is_open())
-            file << std::to_string(this->_score);
+            file << std::to_string(_map->getScore());
     }
 }
 
@@ -59,17 +59,59 @@ int Player::drawSnake(void)
 {
     int ret = 0;
     int grow = 0;
+    int index = 0;
 
-    _map->clearMap();
-    for (auto i = _snake.begin(); i != _snake.end(); i++) {
-        ret = _map->setSnake(i->second.first, i->second.second);
+    _map->clearMap(_snakeParts);
+    for (auto i = _snake.begin(); i != _snake.end(); i++, index++) {
+        if (index == 0) {
+            if (i->first == K_UP)
+                ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[HEAD_UP], _snakeParts);
+            if (i->first == K_DOWN)
+                ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[HEAD_DOWN], _snakeParts);
+            if (i->first == K_LEFT)
+                ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[HEAD_LEFT], _snakeParts);
+            if (i->first == K_RIGHT)
+                ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[HEAD_RIGHT], _snakeParts);
+        }
+        else if (index != 0) {
+            if ((i - 1)->first != i->first && (i - 1)->first == K_UP && i->first == K_RIGHT)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN4]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_UP && i->first == K_LEFT)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN3]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_DOWN && i->first == K_RIGHT)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN2]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_DOWN && i->first == K_LEFT)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN1]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_LEFT && i->first == K_UP)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN2]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_LEFT && i->first == K_DOWN)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN4]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_RIGHT && i->first == K_UP)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN1]);
+            else if ((i - 1)->first != i->first && (i - 1)->first == K_RIGHT && i->first == K_DOWN)
+                _map->setChar((i - 1)->second.first, (i - 1)->second.second, _snakeParts[TURN3]);
+            if (*i != _snake.back()) {
+                if (i->first == K_UP || i->first == K_DOWN)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[STRAIGHT_UPDOWN], _snakeParts);
+                if (i->first == K_LEFT || i->first == K_RIGHT)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[STRAIGHT_LEFTRIGHT], _snakeParts);
+            }
+            else {
+                if (i->first == K_UP)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[TAIL_UP], _snakeParts);
+                if (i->first == K_DOWN)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[TAIL_DOWN], _snakeParts);
+                if (i->first == K_LEFT)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[TAIL_LEFT], _snakeParts);
+                if (i->first == K_RIGHT)
+                    ret = _map->setSnake(i->second.first, i->second.second, _snakeParts[TAIL_RIGHT], _snakeParts);
+            }
+        }
         if (ret == 1) return (1);
         if (ret == 2) grow = 1;
     }
-    if (grow == 1) {
-        _score++;
+    if (grow == 1)
         growSnake();
-    }
     return (0);
 }
 
@@ -134,7 +176,7 @@ std::vector<std::string> Player::getMap() const
 
 size_t Player::getScore() const
 {
-    return (this->_score);
+    return (_map->getScore());
 }
 
 std::map<char, std::string> Player::getTiles() const

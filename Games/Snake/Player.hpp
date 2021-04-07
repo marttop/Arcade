@@ -19,13 +19,29 @@
 
 using my_clock = std::chrono::high_resolution_clock;
 
-
 class Map;
 
 class Player : public IGame {
     public:
         Player();
         ~Player();
+
+        enum Snake {
+            HEAD_UP,
+            HEAD_DOWN,
+            HEAD_LEFT,
+            HEAD_RIGHT,
+            STRAIGHT_UPDOWN,
+            STRAIGHT_LEFTRIGHT,
+            TAIL_UP,
+            TAIL_DOWN,
+            TAIL_LEFT,
+            TAIL_RIGHT,
+            TURN1,
+            TURN2,
+            TURN3,
+            TURN4
+        };
 
         void init();
         bool update();
@@ -47,12 +63,12 @@ class Player : public IGame {
         size_t _bestScore;
         int _x;
         int _y;
-        size_t _score;
         Map *_map;
         Key _input;
         std::string _name;
         std::pair<int, std::pair<int, int>> _snakeEnd;
         std::vector<std::pair<int, std::pair<int, int>>> _snake;
+        std::string _snakeParts;
 };
 
 #endif /* !PLAYER_HPP_ */

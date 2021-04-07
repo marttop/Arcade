@@ -20,17 +20,19 @@ class Player;
 
 class Map {
     public:
-        Map();
+        Map(std::string snakeParts);
         ~Map();
         int getRowCount(void);
         int getColCount(void);
-        int setSnake(int x, int y);
-        void clearMap(void);
+        int setSnake(int x, int y, char part, std::string snakeParts);
+        void clearMap(std::string snakeParts);
         std::vector<std::string> getMap() const;
+        void setChar(int x, int y, char part);
+        size_t getScore() const;
 
     protected:
     private:
-        void spawnFruit(void);
+        void spawnFruit(std::string snakeParts);
         void readMap();
 
         std::vector<std::string> _map;
@@ -38,6 +40,10 @@ class Map {
         int _colCount;
         int _isFruit;
         std::ifstream _file;
+        std::string _wallParts;
+        std::string _fruits;
+        size_t _score;
+        size_t _fruitValue;
 };
 
 #endif /* !MAP_HPP_ */
