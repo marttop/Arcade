@@ -131,10 +131,10 @@ size_t Menu::getScore() const
 void Menu::setKeyPressed(Key k)
 {
     this->_input = k;
-    if (isalpha(k)) {
+    if (isalpha(k) && this->_name.size() < 15) {
         this->_name = this->_name + (char)k;
     }
-    else if (k == K_DEL) {
+    else if (k == K_DEL && this->_name.size() >= 1) {
         this->_name = this->_name.substr(0, this->_name.size() - 1);
     }
 }

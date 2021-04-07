@@ -9,6 +9,8 @@
 #define NCURSESLIB_HPP_
 
 #include "IGfx.hpp"
+#include <curses.h>
+#include <stdlib.h>
 
 class NcursesLib : public IGfx {
     public:
@@ -23,6 +25,7 @@ class NcursesLib : public IGfx {
         void display();
     protected:
     private:
+        WINDOW *_window;
 };
 
 #endif /* !NCURSESLIB_HPP_ */
