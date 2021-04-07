@@ -126,7 +126,7 @@ Key SDLlib::getKeyPressed()
     return (NONE);
 }
 
-void SDLlib::drawText(size_t x, size_t y, std::string text)
+void SDLlib::drawText(size_t x, size_t y, std::string text, size_t size)
 {
     (void)x;
     (void)y;
@@ -138,8 +138,8 @@ void SDLlib::drawText(size_t x, size_t y, std::string text)
     SDL_Rect Message_rect;
     Message_rect.x = x - x * 0.20;
     Message_rect.y = y - y * 0.20;
-    Message_rect.w = 300;
-    Message_rect.h = 30;
+    Message_rect.w = text.size() * size / 2;
+    Message_rect.h = size + 5;
 
     SDL_RenderCopy(_background, Message, NULL, &Message_rect);
     SDL_FreeSurface(surfaceMessage);
