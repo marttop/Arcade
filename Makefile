@@ -19,6 +19,7 @@ CALL_MAKE_SNAKE		=	cd Games/Snake && make
 CALL_MAKE_MENU		=	cd Games/Menu && make
 CALL_MAKE_SDL		=	cd GraphicalLibs/Sources/SDL && make
 CALL_MAKE_SFML		=	cd GraphicalLibs/Sources/SFML && make
+CALL_MAKE_NCURSES	=	cd GraphicalLibs/Sources/Ncurses && make
 
 INC				=	$(DIR1) $(DIR2) $(DIR3) $(DIR4)
 INC_PARAMS		=	$(foreach d, $(INC), -I$d)
@@ -46,6 +47,7 @@ games:
 graphicals:
 	$(CALL_MAKE_SDL)
 	$(CALL_MAKE_SFML)
+	$(CALL_MAKE_NCURSES)
 
 $(NAME): $(OBJ)
 	$(CALL_MAKE_MENU)
@@ -53,6 +55,7 @@ $(NAME): $(OBJ)
 	$(CALL_MAKE_SNAKE)
 	$(CALL_MAKE_SDL)
 	$(CALL_MAKE_SFML)
+	$(CALL_MAKE_NCURSES)
 	$(CXX) -o $(NAME) $(OBJ) $(CXXFLAGS)
 
 clean:
@@ -62,6 +65,7 @@ clean:
 	cd Games/Menu && make clean
 	cd GraphicalLibs/Sources/SDL && make clean
 	cd GraphicalLibs/Sources/SFML && make clean
+	cd GraphicalLibs/Sources/Ncurses && make clean
 
 fclean: clean
 	$(RM) $(NAME)
@@ -70,6 +74,7 @@ fclean: clean
 	cd Games/Menu && make fclean
 	cd GraphicalLibs/Sources/SDL && make fclean
 	cd GraphicalLibs/Sources/SFML && make fclean
+	cd GraphicalLibs/Sources/Ncurses && make fclean
 
 re: fclean all
 

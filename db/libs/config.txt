@@ -2,3 +2,4 @@ lib/arcade_pacman.so=game
 lib/arcade_nibbler.so=game
 lib/arcade_sdl2.so=gfx
 lib/arcade_sfml.so=gfx
+lib/arcade_ncurses.so=gfx
