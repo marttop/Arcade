@@ -14,9 +14,6 @@ NcursesLib::NcursesLib()
 
 NcursesLib::~NcursesLib()
 {
-    this->clear();
-    delwin(_window);
-    printf("\e[1;1H\e[2J");
 }
 
 bool NcursesLib::init(const std::string &map, std::map<char, std::string>)
@@ -29,6 +26,7 @@ bool NcursesLib::init(const std::string &map, std::map<char, std::string>)
     noecho();
     keypad(stdscr, true);
     _window = newwin(1080, 1920, 0, 0);
+    return (true);
 }
 
 Key NcursesLib::getKeyPressed()
