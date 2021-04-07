@@ -44,21 +44,13 @@ Key NcursesLib::getKeyPressed()
         return (K_LEFT);
     if (c == KEY_RIGHT)
         return (K_RIGHT);
-    // if (c == 38)
-    //     return (K_PREV_LIB);
-    // if (c == 169)
-    //     return (K_NEXT_LIB);
-    // if (c == 34)
-    //     return (K_PREV_GAME);
-    // if (c == 39)
-    //     return (K_NEXT_GAME);
-    if (c == 49)
+    if (c == 49 || c == 38)
         return (K_PREV_LIB);
-    if (c == 50)
+    if (c == 50 || c == 169)
         return (K_NEXT_LIB);
-    if (c == 51)
+    if (c == 51 || c == 34)
         return (K_PREV_GAME);
-    if (c == 52)
+    if (c == 52 || c == 39)
         return (K_NEXT_GAME);
     if (c == ' ')
         return (K_SPACE);
