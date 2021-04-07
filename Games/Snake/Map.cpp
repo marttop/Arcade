@@ -7,7 +7,7 @@
 
 #include "Map.hpp"
 
-Map::Map()
+Map::Map(std::string snakeParts)
 {
     _rowCount = 0;
     _colCount = 0;
@@ -19,8 +19,12 @@ Map::Map()
     _rowCount = _map.size();
     _colCount = _map[0].size();
     _isFruit = 0;
-    spawnFruit();
+    _fruits = "FO";
+    _fruitValue = 0;
+    spawnFruit(snakeParts);
     _file.close();
+    _wallParts = "#";
+    _score = 0;
 }
 
 Map::~Map()
@@ -35,25 +39,31 @@ void Map::readMap()
     }
 }
 
-void Map::clearMap(void)
+void Map::clearMap(std::string snakeParts)
 {
     for (int i = 0; i < _rowCount; i++)
         for (int j = 0; j < _colCount; j++)
-            if (_map[i][j] == 'S') _map[i][j] = ' ';
+            if (snakeParts.find(_map[i][j]) != std::string::npos) _map[i][j] = ' ';
 }
 
-int Map::setSnake(int x, int y)
+int Map::setSnake(int x, int y, char part, std::string snakeParts)
 {
-    if (_map[y][x] == 'S' || _map[y][x] == '#')
+    if (snakeParts.find(_map[y][x]) != std::string::npos || _wallParts.find(_map[y][x]) != std::string::npos)
         return (1);
-    else if (_map[y][x] == 'F') {
-        _map[y][x] = 'S';
+    else if (_fruits.find(_map[y][x]) != std::string::npos) {
+        _map[y][x] = part;
+        _score += _fruitValue;
         _isFruit = 0;
-        spawnFruit();
+        spawnFruit(snakeParts);
         return (2);
     }
-    _map[y][x] = 'S';
+    _map[y][x] = part;
     return (0);
+}
+
+void Map::setChar(int x, int y, char part)
+{
+    _map[y][x] = part;
 }
 
 int Map::getRowCount(void)
@@ -66,14 +76,17 @@ int Map::getColCount(void)
     return (_colCount);
 }
 
-void Map::spawnFruit(void)
+void Map::spawnFruit(std::string snakeParts)
 {
+    int ret = 0;
     if (_isFruit == 0) {
         while (1) {
             int x = std::rand() % (_colCount - 2) + 1;
             int y = std::rand() % (_rowCount - 2) + 1;
-            if (_map[y][x] != 'S' && _map[y][x] != '#') {
-                _map[y][x] = 'F';
+            if (snakeParts.find(_map[y][x]) == std::string::npos && _wallParts.find(_map[y][x]) == std::string::npos) {
+                ret = std::rand() % _fruits.size();
+                _map[y][x] = _fruits[ret];
+                _fruitValue = ret + 1;
                 break;
             }
         }
@@ -84,4 +97,9 @@ void Map::spawnFruit(void)
 std::vector<std::string> Map::getMap() const
 {
     return (this->_map);
+}
+
+size_t Map::getScore() const
+{
+    return (this->_score);
 }
