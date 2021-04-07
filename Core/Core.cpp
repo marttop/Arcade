@@ -147,13 +147,21 @@ void Core::run()
         this->_lib->draw(this->_game->getMap());
 
         if (this->_scene == GAME) {
-            this->_lib->drawText(38 *  this->_game->getMap().size(), 10, "Best score: " + std::to_string(this->_game->getBestScore()));
-            this->_lib->drawText(38 * this->_game->getMap().size(), 45, "score: " + std::to_string(this->_game->getScore()));
-            this->_lib->drawText(38 * this->_game->getMap().size(), 80, "name: " + this->_game->getName());
+            this->_lib->drawText(38 *  this->_game->getMap().size(), 10, "Best score: " + std::to_string(this->_game->getBestScore()), 30);
+            this->_lib->drawText(38 * this->_game->getMap().size(), 45, "score: " + std::to_string(this->_game->getScore()), 30);
+            this->_lib->drawText(38 * this->_game->getMap().size(), 80, "name: " + this->_game->getName(), 30);
         }
         if (this->_scene == MENU) {
-            this->_lib->drawText(620, 280, "Best: " + std::to_string(this->_game->getBestScore()));
-            this->_lib->drawText(620, 420, this->_game->getName());
+
+            std::string sub = _gameNames[_gameIdx].substr(_gameNames[_gameIdx].find('_') + 1);
+            std::string sub2 = sub.substr(0, sub.size() - 3);
+            this->_lib->drawText(615, 200, sub2.c_str(), 40);
+            this->_lib->drawText(650, 40, "ARCADE", 40);
+            this->_lib->drawText(200, 200, "Chose your game", 30);
+            this->_lib->drawText(620, 280, "Best: " + std::to_string(this->_game->getBestScore()), 30);
+            this->_lib->drawText(490, 360, "use arrows to select game, press space to start", 15);
+            this->_lib->drawText(493, 380, "press 1,2 to switch graphics, 3,4 to switch games", 15);
+            this->_lib->drawText(620, 420, "name: " + this->_game->getName(), 20);
         }
 
         this->_lib->display();

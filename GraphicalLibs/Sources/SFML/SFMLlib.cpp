@@ -91,9 +91,10 @@ Key SFMLlib::getKeyPressed()
     return (NONE);
 }
 
-void SFMLlib::drawText(size_t x, size_t y, std::string text)
+void SFMLlib::drawText(size_t x, size_t y, std::string text, size_t size)
 {
     _text.setString(text);
+    _text.setCharacterSize(size);
     _text.setPosition(sf::Vector2f{(float)x, (float)y});
     _window.draw(_text);
 }

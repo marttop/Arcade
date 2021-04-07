@@ -33,7 +33,7 @@ Menu::~Menu()
 
 size_t Menu::getBestScore() const
 {
-    if (this->_games[_gamesIdx] == '@')
+    if (_gamesIdx == 0)
         return (this->_bestPacman);
     else
         return (this->_bestSnake);
@@ -96,24 +96,12 @@ void Menu::readMap()
 bool Menu::update()
 {
     if (_input == K_LEFT) {
-        for (size_t i = 0, j = 0; i < _map.size(); i++) {
-            if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
-                _gamesIdx--;
-                if (_gamesIdx < 0) _gamesIdx = (int)_games.size() - 1;
-                _map[i][j] = _games[_gamesIdx];
-                break;
-            }
-        }
+            _gamesIdx--;
+            if (_gamesIdx < 0) _gamesIdx = (int)_games.size() - 1;
     }
     else if (_input == K_RIGHT) {
-        for (size_t i = 0, j = 0; i < _map.size(); i++) {
-            if ((j = _map[i].find(_games[_gamesIdx])) != std::string::npos) {
-                _gamesIdx++;
-                if (_gamesIdx > (int)_games.size() - 1) _gamesIdx = 0;
-                _map[i][j] = _games[_gamesIdx];
-                break;
-            }
-        }
+        _gamesIdx++;
+        if (_gamesIdx > (int)_games.size() - 1) _gamesIdx = 0;
     }
     if (_input == K_SPACE)
         return (true);
