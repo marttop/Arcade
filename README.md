@@ -55,9 +55,8 @@ The Makefile have the following rules (in addition to all, re, clean and fclean)
 
 The results of running a simple make command in your turn in directory generates a program, at least
 three graphics dynamic libraries and at least two game dynamic libraries.
-```$ ./arcade ./lib/arcade_ncurses.so```
 
-The program takes as a startup argument the graphics library to use initially.
+The program takes as a startup argument the graphics library to use initially ```$ ./arcade ./lib/arcade_ncurses.so```.
 It is possible to change the graphics library at run-time.
 
 ### Other
